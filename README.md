@@ -11,6 +11,7 @@ provided by the apache project side is out date.
 
 The parent project will be created from a maven-archetype-quickstart.
 
+
     #!/bin/sh
     mvn archetype:generate \
         -DarchetypeGroupId=org.apache.maven.archetypes \
@@ -22,6 +23,7 @@ The parent project will be created from a maven-archetype-quickstart.
 
 It is the parent project for modules, which make up the application. After the project was created, a few first changes
 should be made to the pom.
+
 
     <properties>
       <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
@@ -35,6 +37,7 @@ configuration of Sling. These configuration properties are needed in modules to 
 
 The main module needed for this project is a ```ui``` project. It contains all aspects of the project necessary for
 displaying data.
+
 
     mvn archetype:generate \
         -DarchetypeGroupId=org.apache.sling \
@@ -59,7 +62,6 @@ When the module is added, some first changes should be made.
   This is a very sensitive change, because also the the ```pom```'s content needs to be changed accordingly.
 
 
-```
     <!-- project.build.plugins -->
     <plugin>
       <groupId>org.apache.felix</groupId>
@@ -76,7 +78,7 @@ When the module is added, some first changes should be made.
         </instructions>
       </configuration>
     </plugin>
-```
+
 
 The change made was very subtle. From ```SLING-INF/scripts;``` to ```SLING-INF/apps/my/node;```. This was done mainly
 for initial consistency of the project. The way scripts (components) are resolved in the repository follows a strict
@@ -88,6 +90,7 @@ later in the tutorial.
 Before working efficiently on the application, providing some data to work with is needed. In Sling, adding content can
 be done in a variety of ways. One would be a simple POST via ```curl```from the command line:
 
+
     #!/bin/sh
     curl -FfirstName="George" \
          -FlastName="Franklin" \
@@ -98,6 +101,7 @@ be done in a variety of ways. One would be a simple POST via ```curl```from the 
 This would create the node ```/sling/content/owners/georgefranklin``` with the given properties. A more reusable
 approach is providing a module with demo content, which can be refined as the application matures. Using the same Maven
 command used when creating the ```pet-clinic-ui``` with a different ```archetypeId``` generates the appropriate module.
+
 
     mvn archetype:generate \
         -DarchetypeGroupId=org.apache.sling \
@@ -115,6 +119,7 @@ Running ```mvn install -PautoInstallBundle``` will install the project in the lo
 running Sling instance. When calling ```http://localhost:8080/my-first-node.html``` a simple representation of
 ```my-first-node.xml``` is displayed. Similar to my-first-node.xml the application's initial content is set up. By
 providing content under ```SLING-INF/sling/content/owners``` like
+
 
     <node>
       <primaryNodeType>nt:unstructured</primaryNodeType>
@@ -151,9 +156,10 @@ providing content under ```SLING-INF/sling/content/owners``` like
 
     </node>
 
-test data is added. The initial content and renderer is kept in order to have reference data throughout the tutorial -
+test data is added. The archetype's initial content and script are kept in order to have reference data throughout the tutorial -
 until dedicated render components are provided. To deploy the data properly, the ```SLING-INF/sling/content/owners```
-directory has to be added to the plugins InitialContent configuration.
+directory has to be added to the plugins ```Sling-Initial-Content`` configuration.
+
 
     <plugin>
       <groupId>org.apache.felix</groupId>
@@ -172,9 +178,8 @@ directory has to be added to the plugins InitialContent configuration.
       </configuration>
     </plugin>
 
-
 ## Everything is a resource
 
-The mantra of Sling Application design is "Everything is a resource". The programming model allows addressing resources
-renderer in various ways, be providing a resource type. The resource type is used for script resolution, which is basically
-the process of determining the correct rendering of a resource.
+The mantra of Sling application design is "Everything is a resource". The programming model allows addressing resources
+rendered in various ways by providing a resource type. The resource type is used for script resolution, which is basically
+the process of determining the correct way to render a resource.
