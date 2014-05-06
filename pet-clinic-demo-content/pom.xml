@@ -25,10 +25,10 @@
     <version>1.0.0-SNAPSHOT</version>
   </parent>
 
-  <artifactId>pet-clinic-ui</artifactId>
+  <artifactId>pet-clinic-demo-content</artifactId>
   <packaging>bundle</packaging>
 
-  <name>pet-clinic-ui</name>
+  <name>pet-clinic-demo-content</name>
 
   <build>
     <plugins>
@@ -41,7 +41,8 @@
           <instructions>
             <Sling-Nodetypes>SLING-INF/nodetypes/nodetypes.cnd</Sling-Nodetypes>
             <Sling-Initial-Content>
-              SLING-INF/apps/my/node;overwrite:=true;uninstall:=true;path:=/apps/my/node
+              SLING-INF/apps;overwrite:=true;uninstall:=true;path:=/apps,
+              SLING-INF/content;overwrite:=true;uninstall:=true;path:=/content
             </Sling-Initial-Content>
           </instructions>
         </configuration>
