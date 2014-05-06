@@ -25,7 +25,7 @@ should be made to the pom.
       <sling.port>8080</sling.port>
     </properties>
 
-Adding the properties ```sling.user```, ```sling.password``` and ```sling.port``` provides easy access to the basic
+Adding the properties ```sling.user```, ``sling.password``` and ```sling.port``` provides easy access to the basic
 configuration of Sling. These configuration properties are needed in modules to access Sling for deployments.
 
 The main module needed for this project is a ```ui``` project. It contains all aspects of the project necessary for
@@ -45,3 +45,35 @@ stored under ```pet-clinic-ui/src/main/SLING-INF```.
 - ```content/```contains the initial content provided by the archetype.
 - ```nodetypes/```provides and example node type, which is basically a data type definition for the Java Content Repository.
 - ```scripts/``` provides a basic example for a Sling resource renderer.
+
+When the module is added, some first changes should be made.
+
+- Using the properties defined in the parent ```pom```.
+- Updating the plugin versions.
+- Renaming ```SLING-INF/scripts``` to ```SLING-INF/apps``` and also adding the directories ```my/node```.
+  This is a very sensitive change, because also the the ```pom```'s content needs to be changed accordingly.
+
+
+```
+    <!-- project.build.plugins -->
+    <plugin>
+      <groupId>org.apache.felix</groupId>
+      <artifactId>maven-bundle-plugin</artifactId>
+      <extensions>true</extensions>
+      <version>2.4.0</version>
+      <configuration>
+        <instructions>
+          <Sling-Nodetypes>SLING-INF/nodetypes/nodetypes.cnd</Sling-Nodetypes>
+          <Sling-Initial-Content>
+            SLING-INF/apps/my/node;overwrite:=true;uninstall:=true;path:=/apps/my/node,
+            SLING-INF/content;overwrite:=true;uninstall:=true;path:=/content
+          </Sling-Initial-Content>
+        </instructions>
+      </configuration>
+    </plugin>
+```
+
+The change made was very subtle. From ```SLING-INF/scripts;``` to ```SLING-INF/apps/my/node;```. This was done mainly
+for initial consistency of the project. The way scripts (components) are resolved in the repository follows a strict
+scheme, which needs to be understood in order to work with sling efficiently. A detailed guide on components follows
+later in the tutorial.
