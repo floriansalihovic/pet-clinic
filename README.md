@@ -2,6 +2,11 @@
 
 This application is intended to provide a fast and easy access to Apache Sling using Groovy as a scripting language.
 
+## Before getting started - getting Sling
+
+I highly recommend checking the Sling sources out from the repository (GIT or SVN) and compiling it by hand. The launchpad
+provided by the apache project side is out date.
+
 ## Getting started
 
 The parent project will be created from a maven-archetype-quickstart.
@@ -106,3 +111,45 @@ The module's layout equals the one of the ```pet-clinic-ui``` so we make the sam
 is used as a container for content only, the folders ```scripts/``` and ```nodetypes/``` can be deleted right away. In
 ```pet-clinic-ui```, the folder ```content/``` can be deleted - the content will be stored in ```pet-clinic-demo-content```.
 
+Running ```mvn install -PautoInstallBundle``` will install the project in the local repository and deploy it to the
+running Sling instance. When calling ```http://localhost:8080/my-first-node.html``` a simple representation of
+```my-first-node.xml``` is displayed. Similar to my-first-node.xml the application's initial content is set up. By
+providing content under ```SLING-INF/sling/content/owners``` like
+
+    <node>
+      <primaryNodeType>nt:unstructured</primaryNodeType>
+
+      <property>
+        <name>firstName</name>
+        <type>String</type>
+        <value>George</value>
+      </property>
+
+      <property>
+        <name>lastName</name>
+        <type>String</type>
+        <value>Franklin</value>
+      </property>
+
+      <property>
+        <name>address</name>
+        <type>String</type>
+        <value>110 W. Liberty St.</value>
+      </property>
+
+      <property>
+        <name>city</name>
+        <type>String</type>
+        <value>Madison</value>
+      </property>
+
+      <property>
+        <name>telephone</name>
+        <type>String</type>
+        <value>6085551023</value>
+      </property>
+
+    </node>
+
+test data is added. The initial content and renderer is kept in order to have reference data throughout the tutorial -
+until dedicated render components are provided.
