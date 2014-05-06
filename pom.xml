@@ -21,7 +21,7 @@
   <groupId>io.github.floriansalihovic.sling</groupId>
   <artifactId>pet-clinic</artifactId>
   <version>1.0.0-SNAPSHOT</version>
-  <packaging>jar</packaging>
+  <packaging>pom</packaging>
 
   <name>pet-clinic</name>
   <url>https://github.com/floriansalihovic/pet-clinic</url>
