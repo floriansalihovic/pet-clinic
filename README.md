@@ -2,6 +2,9 @@
 
 This application is intended to provide a fast and easy access to Apache Sling using Groovy as a scripting language.
 
+> This tutorial aims to provide an example of how the pieces are connected. Making it easier to start developing
+> with Sling.
+
 ## Before getting started - getting Sling
 
 I highly recommend checking the Sling sources out from the repository (GIT or SVN) and compiling it by hand. The launchpad
@@ -183,3 +186,46 @@ directory has to be added to the plugins ```Sling-Initial-Content`` configuratio
 The mantra of Sling application design is "Everything is a resource". The programming model allows addressing resources
 rendered in various ways by providing a resource type. The resource type is used for script resolution, which is basically
 the process of determining the correct way to render a resource.
+
+In the PetClinic application, different types of resource are easily identified:
+
+- Pages
+- Owners (of pets)
+- Pets
+- Vetenarians
+- Visits
+
+JackRabbit - the underlying content repository (basically the persistence layer) - is an unstructured data store.
+There is no schema and those resources can basically be stored at any location. The obvious differentiation made divides
+resources in data and resource which render data - associated via resource type. Not going into the resolution in full
+depth, the latter resource are stored in ```/libs``` and ```/apps```. The locations can be looked up in the [Apache Felix
+OSGi](http://localhost:8080/system/console/jcrresolver) (Sling must be running) console. Those resources are refered to as scripts,
+renderers or (view) components. In ```/libs``` standard Sling components are stored, whereas in ```/apps``` application
+specific scripts are stored, which can also override components provided in ```/libs``` (by resource type as illustrated
+in the following short example).
+
+Having a resource with a resource type of ```owners/owner```, Sling will look into ```/apps/owners/owner``` for any kind
+of component used for displaying and if none is found, ```/libs/owners/owner``` will be checked. That is the short story.
+
+The data and the selected scripts for rendering have to be set in a broader context though. When working with data, or
+resources in the context of Sling, there are always various resources involved in creating and modifying data.
+
+The outline can be imagined as the following the user wants to create a visit for his pet ar the veterinarian. In order
+to do so, he has to register himself and his pet at for a visit at a certain time for a visit at a specific pet clinic
+run by a doctor.
+
+So naturally pets and their owners, the vets and so on appear to be resource. But so are the HTML pages requested. Sling
+does not differentiate between those subjects in terms of resources - only how the data may be accessed, modified and
+displayed.
+
+This tutorial aims to provide an example of how the pieces are connected.
+
+## About resources and resource types in the PetClinic
+
+The application is basically a Sling flavored [Spring PetClinic](http://docs.spring.io/docs/petclinic.html) version based
+on the [Kotlin](https://github.com/cheptsov/kotlin-nosql-mongodb-petclinic) port. That means the objectives are set and
+a port to Sling can be done without looking too much left and right.
+
+The application provides basically a web interfaces to add and modify everything a pet clinic would need to work with.
+As already stated, pages are resources just as entities in the domain data and Sling provides a lot of power for creating
+them.
