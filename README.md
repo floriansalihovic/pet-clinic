@@ -229,3 +229,32 @@ a port to Sling can be done without looking too much left and right.
 The application provides basically a web interfaces to add and modify everything a pet clinic would need to work with.
 As already stated, pages are resources just as entities in the domain data and Sling provides a lot of power for creating
 them.
+
+## About pets and html pages
+
+The first resource type used will be ```components/pages/owner```. The resource type will be used to render pages, which
+are made up of components. The resource type will be applied to four resource placed in ```/content/pet-clinic/en```. This
+location can be thought of as the directory used for storing web pages accessible to the user. Resources like
+
+
+    <node>
+      <primaryNodeType>nt:unstructured</primaryNodeType>
+
+      <property>
+        <name>sling:resourceType</name>
+        <type>String</type>
+        <value>components/pages/owners</value>
+      </property>
+
+      <property>
+        <name>jcr:title</name>
+        <type>String</type>
+        <value>Owners</value>
+      </property>
+
+    </node>
+
+The property ```sling:resourceType``` determines the resources type and ```jcr:title``` determines the title of the page.
+The ```jcr```prefix derives directly from the underlying Java Content Repository implementation and its mechanics. But
+that is nothing important for now - important is only the fact that we have these two properties. As done in the existing
+pet clinic applications, similar resources are created for veterinarians, specialities and pet types.
