@@ -152,4 +152,29 @@ providing content under ```SLING-INF/sling/content/owners``` like
     </node>
 
 test data is added. The initial content and renderer is kept in order to have reference data throughout the tutorial -
-until dedicated render components are provided.
+until dedicated render components are provided. To deploy the data properly, the ```SLING-INF/sling/content/owners```
+directory has to be added to the plugins InitialContent configuration.
+
+    <plugin>
+      <groupId>org.apache.felix</groupId>
+      <artifactId>maven-bundle-plugin</artifactId>
+      <extensions>true</extensions>
+      <version>2.4.0</version>
+      <configuration>
+        <instructions>
+          <Sling-Nodetypes>SLING-INF/nodetypes/nodetypes.cnd</Sling-Nodetypes>
+          <Sling-Initial-Content>
+            SLING-INF/apps;overwrite:=true;uninstall:=true;path:=/apps,
+            SLING-INF/content;overwrite:=true;uninstall:=true;path:=/content,
+            SLING-INF/sling/content/owners;overwrite:=true;uninstall:=true;path:=/sling/content/owners
+          </Sling-Initial-Content>
+        </instructions>
+      </configuration>
+    </plugin>
+
+
+## Everything is a resource
+
+The mantra of Sling Application design is "Everything is a resource". The programming model allows addressing resources
+renderer in various ways, be providing a resource type. The resource type is used for script resolution, which is basically
+the process of determining the correct rendering of a resource.
