@@ -77,3 +77,32 @@ The change made was very subtle. From ```SLING-INF/scripts;``` to ```SLING-INF/a
 for initial consistency of the project. The way scripts (components) are resolved in the repository follows a strict
 scheme, which needs to be understood in order to work with sling efficiently. A detailed guide on components follows
 later in the tutorial.
+
+## Initial content
+
+Before working efficiently on the application, providing some data to work with is needed. In Sling, adding content can
+be done in a variety of ways. One would be a simple POST via ```curl```from the command line:
+
+    #!/bin/sh
+    curl -FfirstName="George" \
+         -FlastName="Franklin" \
+         -Faddress="Madison, 110 W. Liberty St." \
+         -Ftelephone="6085551023" \
+         http://localhost:8080/sling/content/owners/georgefranklin
+
+This would create the node ```/sling/content/owners/georgefranklin``` with the given properties. A more reusable
+approach is providing a module with demo content, which can be refined as the application matures. Using the same Maven
+command used when creating the ```pet-clinic-ui``` with a different ```archetypeId``` generates the appropriate module.
+
+    mvn archetype:generate \
+        -DarchetypeGroupId=org.apache.sling \
+        -DarchetypeArtifactId=sling-initial-content-archetype \
+        -DarchetypeVersion=1.0.0 \
+        -DgroupId=io.github.floriansalihovic.petclinic \
+        -DartifactId=pet-clinic-demo-content \
+        -Dversion=1.0.0-SNAPSHOT
+
+The module's layout equals the one of the ```pet-clinic-ui``` so we make the same modifications. But since this module
+is used as a container for content only, the folders ```scripts/``` and ```nodetypes/``` can be deleted right away. In
+```pet-clinic-ui```, the folder ```content/``` can be deleted - the content will be stored in ```pet-clinic-demo-content```.
+
