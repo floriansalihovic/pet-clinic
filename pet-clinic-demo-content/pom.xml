@@ -42,7 +42,8 @@
             <Sling-Nodetypes>SLING-INF/nodetypes/nodetypes.cnd</Sling-Nodetypes>
             <Sling-Initial-Content>
               SLING-INF/apps;overwrite:=true;uninstall:=true;path:=/apps,
-              SLING-INF/content;overwrite:=true;uninstall:=true;path:=/content
+              SLING-INF/content;overwrite:=true;uninstall:=true;path:=/content,
+              SLING-INF/sling/content/owners;overwrite:=true;uninstall:=true;path:=/sling/content/owners
             </Sling-Initial-Content>
           </instructions>
         </configuration>
