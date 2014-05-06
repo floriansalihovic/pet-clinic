@@ -37,12 +37,12 @@
         <groupId>org.apache.felix</groupId>
         <artifactId>maven-bundle-plugin</artifactId>
         <extensions>true</extensions>
-        <version>2.0.1</version>
+        <version>2.4.0</version>
         <configuration>
           <instructions>
             <Sling-Nodetypes>SLING-INF/nodetypes/nodetypes.cnd</Sling-Nodetypes>
             <Sling-Initial-Content>
-              SLING-INF/scripts;overwrite:=true;uninstall:=true;path:=/apps/my/node,
+              SLING-INF/apps/my/node;overwrite:=true;uninstall:=true;path:=/apps/my/node,
               SLING-INF/content;overwrite:=true;uninstall:=true;path:=/content
             </Sling-Initial-Content>
           </instructions>
@@ -58,7 +58,7 @@
           <plugin>
             <groupId>org.apache.sling</groupId>
             <artifactId>maven-sling-plugin</artifactId>
-            <version>2.0.4-incubator</version>
+            <version>2.1.0</version>
             <executions>
               <execution>
                 <id>install-bundle</id>
@@ -66,9 +66,9 @@
                   <goal>install</goal>
                 </goals>
                 <configuration>
-                  <slingUrl>http://localhost:8888/system/console</slingUrl>
-                  <user>admin</user>
-                  <password>admin</password>
+                  <slingUrl>http://localhost:${sling.port}/system/console</slingUrl>
+                  <user>${sling.user}</user>
+                  <password>${sling.password}</password>
                 </configuration>
               </execution>
             </executions>
