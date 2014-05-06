@@ -1,3 +1,4 @@
+<?xml version="1.0" encoding="UTF-8"?>
 <!--
   - Copyright 2005-2014 The Apache Software Foundation.
   -
@@ -18,7 +19,7 @@
 
   <modelVersion>4.0.0</modelVersion>
 
-  <groupId>io.github.floriansalihovic.sling</groupId>
+  <groupId>io.github.floriansalihovic.petclinic</groupId>
   <artifactId>pet-clinic</artifactId>
   <version>1.0.0-SNAPSHOT</version>
   <packaging>pom</packaging>
@@ -41,4 +42,9 @@
       <scope>test</scope>
     </dependency>
   </dependencies>
+
+  <modules>
+    <module>pet-clinic-ui</module>
+  </modules>
+
 </project>
