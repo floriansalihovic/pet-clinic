@@ -28,6 +28,9 @@
 
   <properties>
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+    <sling.user>admin</sling.user>
+    <sling.password>admin</sling.password>
+    <sling.port>8080</sling.port>
   </properties>
 
   <dependencies>
