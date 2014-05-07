@@ -232,7 +232,7 @@ them.
 
 ## About pets and html pages
 
-The first resource type used will be ```components/pages/owner```. The resource type will be used to render pages, which
+The first resource type used will be ```petclinic/components/pages/owner```. The resource type will be used to render pages, which
 are made up of components. The resource type will be applied to four resource placed in ```/content/pet-clinic/en```. This
 location can be thought of as the directory used for storing web pages accessible to the user. Resources like
 
@@ -243,7 +243,7 @@ location can be thought of as the directory used for storing web pages accessibl
       <property>
         <name>sling:resourceType</name>
         <type>String</type>
-        <value>components/pages/owners</value>
+        <value>petclinic/components/pages/owners</value>
       </property>
 
       <property>
@@ -258,3 +258,44 @@ The property ```sling:resourceType``` determines the resources type and ```jcr:t
 The ```jcr```prefix derives directly from the underlying Java Content Repository implementation and its mechanics. But
 that is nothing important for now - important is only the fact that we have these two properties. As done in the existing
 pet clinic applications, similar resources are created for veterinarians, specialities and pet types.
+
+With commit [f51b542](https://github.com/floriansalihovic/pet-clinic/commit/aadf5310b1969b48d9bc31b2955188022ab95671) a
+whole bunch of ```.esp``` files with corresponding assets are accessible. The file ending is necessary to indicate those
+files are scripts - jsp and similar file types are fine as well. ```.html``` will be ignored, because it does not play
+well with Sling's script resolution. The ```.esp```files are nothing more then compiled ```.html```files, so nothing
+special invoked or processed at the moment.
+
+Having demo content in ```/content/petclinic/en``` and renderers as well as assets in place,
+```mvn clean install -PautoInstallBundle``` will deploy the application and makes data accessible. Opening the browser
+and visiting [http://localhost:8080/content/petclinic/en/owners.html](http://localhost:8080/content/petclinic/en/owners.html)
+will give a first idea about what the application looks like. But there is more.
+
+### Resources, resources types and selectors
+
+Before breathing life into the application, lets revisit a bit of the application's current state - in the running instance.
+To isolate the main mechanics used focusing on owners reduces the amount of data to look at.
+
+- ```/content/petclinic/en/owners```
+- ```/apps/petclinic/components/pages/owners/add.esp```
+- ```/apps/petclinic/components/pages/owners/detail.esp```
+- ```/apps/petclinic/components/pages/owners/edit.esp```
+- ```/apps/petclinic/components/pages/owners/html.esp```
+
+Those are the relevant files to look at. As already demonstrated,
+[http://localhost:8080/content/petclinic/en/owners.html](http://localhost:8080/content/petclinic/en/owners.html) gives a
+first look at the applications look. This will actually use ```/apps/petclinic/components/pages/owners/html.esp``` to
+render the resource. This is a result of the resource resolution process. Sling takes the path and deconstructs certain
+information from it:
+
+- The resource: the resource is located after ```host:port``` until the first extension (```.html```) in the example's case.
+- The resource type (```sling:resourceType```): The resource type is a property of the resource determining the script
+ to render it. When setting the resource types, the initial folder/path segment should be omitted.
+ ```petclinic/components/pages/owners``` is the resource type of the requested resource in this example.
+- The extension: The extension is a way to indicate in which format a resource should be rendered. ```.json```, ```.xml``` and
+  ```.html``` are possible native extensions to Sling. Which makes
+  [http://localhost:8080/content/petclinic/en/owners.json](http://localhost:8080/content/petclinic/en/owners.json) and
+  [http://localhost:8080/content/petclinic/en/owners.xml](http://localhost:8080/content/petclinic/en/owners.xml) valid
+  calls as well. In the example html is used.
+- Selectors: selectors haven't been discussed yet, but are crucial in understanding Sling. Selectors are indicators which
+  determine the actual script being invoked when a resource is addressed. Selectors are placed between the resource and its
+  extension, separeted by ```.```.
