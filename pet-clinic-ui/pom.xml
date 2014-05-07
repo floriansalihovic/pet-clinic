@@ -41,7 +41,9 @@
           <instructions>
             <Sling-Nodetypes>SLING-INF/nodetypes/nodetypes.cnd</Sling-Nodetypes>
             <Sling-Initial-Content>
-              SLING-INF/apps/my/node;overwrite:=true;uninstall:=true;path:=/apps/my/node
+              SLING-INF/apps/my/node;overwrite:=true;uninstall:=true;path:=/apps/my/node,
+              SLING-INF/apps/petclinic;overwrite:=true;uninstall:=true;path:=/apps/petclinic,
+              SLING-INF/etc/clientlibs/petclinic;overwrite:=true;uninstall:=true;path:=/etc/clientlibs/petclinic
             </Sling-Initial-Content>
           </instructions>
         </configuration>

@@ -1,0 +1,120 @@
+<!doctype html>
+<html xmlns="http://www.w3.org/1999/html" lang="en-US">
+<head>
+  <meta charset="UTF-8"/>
+  <meta content="IE=edge,chrome=1" http-equiv="X-UA-Compatible"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <link href="/etc/clientlibs/petclinic/css/default.css" rel="stylesheet"/>
+  <link href="/etc/clientlibs/petclinic/css/semantic.min.css" rel="stylesheet"/>
+  <script type="text/javascript" src="/etc/clientlibs/petclinic/js/jquery-1.11.0.min.js"></script>
+  <script type="text/javascript" src="/etc/clientlibs/petclinic/js/semantic.min.js"></script>
+</head>
+<body>
+
+<div class="ui menu teal inverted">
+  <a class="title item" href="/content/petclinic/en/owners.html"><strong>Pet Clinic</strong></a>
+  <a class="item" href="/content/petclinic/en/owners.html">Find Owners</a>
+  <a class="item" href="/content/petclinic/en/vets.html">Veterinarians</a>
+  <a class="item" href="/content/petclinic/en/specialities.html">Specialities</a>
+  <a class="item" href="/content/petclinic/en/petTypes.html">Pet Types</a>
+</div>
+
+<div class="container">
+  <div class="ui grid">
+    <div class="twelve wide column">
+      <h1 class="ui header">Owner</h1>
+    </div>
+    <div class="four wide column">
+      <!-- todo: Link to owners.edit.html for the specific owner. -->
+      <a class="small ui right floated button blue" href="#">Edit Owner</a>
+    </div>
+  </div>
+
+  <!-- todo: display owners. -->
+  <table class="ui table segment">
+    <thead>
+    <tr>
+      <th>Name</th>
+      <th>City</th>
+      <th>Address</th>
+      <th>Telephone</th>
+      <th>Pets</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr>
+      <th>Name</th>
+      <td><i class="user icon"></i> <span>George Franklin</span></td>
+    </tr>
+    <tr>
+      <th>Address</th>
+      <td><i class="map marker icon"></i> <span>Madison, 110 W. Liberty St.</span></td>
+    </tr>
+    <tr>
+      <th>Telephone</th>
+      <td><i class="phone icon"></i> <span>6085551023</span></td>
+    </tr>
+    </tbody>
+  </table>
+
+  <div class="ui grid">
+    <div class="twelve wide column">
+      <h2 class="ui header">Pets and Visits</h2>
+    </div>
+    <div class="four wide column">
+      <!-- todo: link to pets.add.html/owner.path -->
+      <a class="small ui right floated button green" href="#">Add Pet</a>
+    </div>
+  </div>
+
+  <table class="ui table segment">
+    <thead>
+    <tr>
+      <th style="width: 25%">Name</th>
+      <th style="width: 25%">Type</th>
+      <th style="width: 25%">Visit Date</th>
+      <th style="width: 25%">Description</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr>
+      <!-- todo: link to pets.edit.html/pet.path -->
+      <td style="vertical-align: top"><a href="#">Janny</a></td>
+      <td style="vertical-align: top">Hamster</td>
+      <td colspan="2" style="padding: 0">
+        <table class="ui table small " style="width: 100%">
+          <tbody>
+          <tr>
+            <td colspan="2">
+              <!-- todo: link to visits.add.html -->
+              <a class="mini ui green button" href="#">Add Visit</a>
+            </td>
+          </tr>
+          </tbody>
+        </table>
+      </td>
+    </tr>
+    </tbody>
+  </table>
+</div>
+
+<div class="ui divider"></div>
+<!-- todo: create component. -->
+<div class="ui divided horizontal footer link list">
+  <div class="item">&copy; 2014 Florian Salihovic</div>
+  <a href="https://github.com/floriansalihovic" class="item">Github</a>
+
+  <div class="item">Written in <a href="https://sling.apache.org/" target="_blank">Apache Sling</a></div>
+  <div class="item">
+    Powered by <a href="http://floriansalihovic.github.io" target="_blank">me</a>
+  </div>
+</div>
+</body>
+
+<script type="text/javascript">
+  $("document").ready(function () {
+    $('.ui.radio.checkbox').checkbox();
+    $('.ui.checkbox').checkbox();
+  })
+</script>
+</html>

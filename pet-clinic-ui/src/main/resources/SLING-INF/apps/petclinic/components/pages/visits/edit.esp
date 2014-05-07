@@ -1,0 +1,99 @@
+<!doctype html>
+<html lang="en-US">
+<head>
+  <meta charset="UTF-8"/>
+  <meta content="IE=edge,chrome=1" http-equiv="X-UA-Compatible"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <link href="/etc/clientlibs/petclinic/css/default.css" rel="stylesheet"/>
+  <link href="/etc/clientlibs/petclinic/css/semantic.min.css" rel="stylesheet"/>
+  <script type="text/javascript" src="/etc/clientlibs/petclinic/js/jquery-1.11.0.min.js"></script>
+  <script type="text/javascript" src="/etc/clientlibs/petclinic/js/semantic.min.js"></script>
+</head>
+<body>
+
+<div class="ui menu teal inverted">
+  <a class="title item" href="/content/petclinic/en/owners.html"><strong>Pet Clinic</strong></a>
+  <a class="item" href="/content/petclinic/en/owners.html">Find Owners</a>
+  <a class="item" href="/content/petclinic/en/vets.html">Veterinarians</a>
+  <a class="item" href="/content/petclinic/en/specialities.html">Specialities</a>
+  <a class="item" href="/content/petclinic/en/petTypes.html">Pet Types</a>
+</div>
+
+<div class="container">
+  <h1 class="ui header">Edit Pet Visit</h1>
+
+  <form method="POST" action="add" role="form" class="ui form">
+    <input name="petId" type="hidden" value="${pet.id}"/>
+
+    <div class="field">
+      <label for="ownerName">Owner</label>
+      <!-- todo:replace by owner.firstName, owner.lastName. -->
+      <input type="text" id="ownerName" value="${owner.firstName  owner.lastName}" readonly="true"/>
+    </div>
+    <div class="field">
+      <label for="petName">Pet</label>
+      <!-- todo: replace by owner.firstName, owner.lastName. -->
+      <input type="text" id="petName" value="${pet.name}" readonly="true"/>
+    </div>
+    <div class="field">
+      <label for="petBirthDate">Birth Date</label>
+      <!-- todo: pet.birthDate -->
+      <input type="text" id="petBirthDate" value="${pet.birthDate.toString('dd/MM/yyyy')}" readonly="true"/>
+    </div>
+    <div class="date field">
+      <label for="date">Date</label>
+      <!-- POST parameter -->
+      <input type="text" id="date" name="date" placeholder="dd/MM/yyyy"/>
+    </div>
+    <div class="field">
+      <label for="description">Description</label>
+      <!-- POST parameter -->
+      <input type="text" id="description" name="description" placeholder="Description"/>
+    </div>
+    <button type="submit" class="ui blue submit button">Add</button>
+  </form>
+</div>
+
+<div class="ui divider"></div>
+<!-- todo: create component. -->
+<div class="ui divided horizontal footer link list">
+  <div class="item">&copy; 2014 Florian Salihovic</div>
+  <a href="https://github.com/floriansalihovic" class="item">Github</a>
+
+  <div class="item">
+    Written in <a href="https://sling.apache.org/" target="_blank">Apache Sling</a>
+  </div>
+  <div class="item">
+    Powered by <a href="http://floriansalihovic.github.io" target="_blank">me</a>
+  </div>
+</div>
+</body>
+
+<script type="text/javascript">
+  $(document).ready(function () {
+    $('.ui.radio.checkbox').checkbox();
+    $('.ui.checkbox').checkbox();
+    $(".ui.form").form({
+      date: {
+        identifier: 'date',
+        rules: [
+          {
+            type: 'empty',
+            prompt: 'Please date'
+          }
+        ]
+      },
+      description: {
+        identifier: 'description',
+        rules: [
+          {
+            type: 'empty',
+            prompt: 'Please description'
+          }
+        ]
+      }
+    })
+  })
+</script>
+
+</html>
