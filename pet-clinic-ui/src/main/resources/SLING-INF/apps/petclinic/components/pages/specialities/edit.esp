@@ -27,7 +27,7 @@
     <div class="field">
       <label for="name">Name</label>
       <!-- todo: replace with speciality.name. -->
-      <input type="text" id="name" name="name" placeholder="Name" value="${speciality.name}"/>
+      <input type="text" id="name" name="name" placeholder="Name" value="#{speciality.name}"/>
     </div>
     <button type="submit" class="ui blue submit button">Save</button>
   </form>

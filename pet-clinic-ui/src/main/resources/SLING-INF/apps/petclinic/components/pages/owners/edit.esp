@@ -26,27 +26,27 @@
     <div class="field">
       <label for="firstName">First Name</label>
       <!-- todo: replace with owner.firstName. -->
-      <input type="text" id="firstName" name="firstName" placeholder="First Name" value="${owner.firstName}"/>
+      <input type="text" id="firstName" name="firstName" placeholder="First Name" value="#{owner.firstName}"/>
     </div>
     <div class="field">
       <label for="lastName">Last Name:</label>
       <!-- todo: replace with owner.lastName. -->
-      <input type="text" id="lastName" name="lastName" placeholder="Last Name" value="${owner.lastName}"/>
+      <input type="text" id="lastName" name="lastName" placeholder="Last Name" value="#{owner.lastName}"/>
     </div>
     <div class="field">
       <label for="address">Address:</label>
       <!-- todo: replace with owner.address. -->
-      <input type="text" id="address" name="address" placeholder="Address" value="${owner.address}"/>
+      <input type="text" id="address" name="address" placeholder="Address" value="#{owner.address}"/>
     </div>
     <div class="field">
       <label for="city">City:</label>
       <!-- todo: replace with owner.city. -->
-      <input type="text" id="city" name="city" placeholder="City" value="${owner.city}"/>
+      <input type="text" id="city" name="city" placeholder="City" value="#{owner.city}"/>
     </div>
     <div class="field">
       <label for="telephone">Telephone:</label>
       <!-- todo: replace with owner.telephone. -->
-      <input type="text" id="telephone" name="telephone" placeholder="Telephone" value="${owner.telephone}"/>
+      <input type="text" id="telephone" name="telephone" placeholder="Telephone" value="#{owner.telephone}"/>
     </div>
     <button type="submit" class="ui blue submit button">Save</button>
   </form>

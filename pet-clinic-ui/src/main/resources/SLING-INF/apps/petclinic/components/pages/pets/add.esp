@@ -27,7 +27,7 @@
     <div class="field">
       <label for="ownerName">Owner</label>
       <!-- todo: replace with owner.firstName, owner.lastName. -->
-      <input type="text" id="ownerName" value="${owner.firstName owner.lastName}" readonly="true"/>
+      <input type="text" id="ownerName" value="#{owner.firstName owner.lastName}" readonly="true"/>
     </div>
     <div class="field">
       <label for="name">Name</label>
@@ -45,8 +45,8 @@
       <div class="field">
         <div class="ui radio checkbox">
           <!-- POST parameter -> pet.type -->
-          <input type="radio" name="petType" value="${petType.type}">
-          <label>${petType.name}</label>
+          <input type="radio" name="petType" value="#{petType.type}">
+          <label>#{petType.name}</label>
         </div>
       </div>
     </div>

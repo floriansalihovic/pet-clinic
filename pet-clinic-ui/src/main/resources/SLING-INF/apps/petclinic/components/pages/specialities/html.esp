@@ -39,7 +39,7 @@
     <!-- todo: for each speciality create a row. -->
     <tr>
       <!-- todo: link to specialities.edit.html/speciality.path -->
-      <td><a href="#">"${speciality.name}"</a></td>
+      <td><a href="#">"#{speciality.name}"</a></td>
     </tr>
     </tbody>
   </table>

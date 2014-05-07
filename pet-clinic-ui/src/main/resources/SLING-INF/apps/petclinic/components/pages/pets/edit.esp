@@ -24,22 +24,22 @@
 
   <!-- todo: address owner resource. -->
   <form method="POST" action="#" role="form" class="ui form">
-    <input name="petId" type="hidden" value="${pet.id}"/>
+    <input name="petId" type="hidden" value="#{pet.id}"/>
 
     <div class="field">
       <label for="ownerName">Owner</label>
       <!-- todo: replace with owner.firstName, owner.lastName. -->
-      <input type="text" id="ownerName" value="${owner.firstName owner.lastName}" readonly="true"/>
+      <input type="text" id="ownerName" value="#{owner.firstName owner.lastName}" readonly="true"/>
     </div>
     <div class="field">
       <label for="name">Name</label>
       <!-- todo: replace with pet.name -->
-      <input type="text" id="name" name="name" placeholder="Name" value="${pet.name}"/>
+      <input type="text" id="name" name="name" placeholder="Name" value="#{pet.name}"/>
     </div>
     <div class="date field">
       <label for="birthDate">Birth Date</label>
       <!-- todo: set and format pet.birthDate. -->
-      <input type="text" id="birthDate" name="birthDate" placeholder="dd/MM/yyyy" value="${pet.birthDate}"/>
+      <input type="text" id="birthDate" name="birthDate" placeholder="dd/MM/yyyy" value="#{pet.birthDate}"/>
     </div>
     <div class="field">
       <label>Type</label>

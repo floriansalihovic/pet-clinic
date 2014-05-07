@@ -23,15 +23,15 @@
   <h1 class="ui header">Edit Veterinarian</h1>
 
   <form method="POST" action="edit" role="form" class="ui form">
-    <input name="id" type="hidden" th:value="${vet.id}"/>
+    <input name="id" type="hidden" th:value="#{vet.id}"/>
 
     <div class="field">
       <label for="firstName">First Name</label>
-      <input type="text" id="firstName" name="firstName" placeholder="First Name" th:value="${vet.firstName}"/>
+      <input type="text" id="firstName" name="firstName" placeholder="First Name" th:value="#{vet.firstName}"/>
     </div>
     <div class="field">
       <label for="lastName">Last Name</label>
-      <input type="text" id="lastName" name="lastName" placeholder="Last Name" th:value="${vet.lastName}"/>
+      <input type="text" id="lastName" name="lastName" placeholder="Last Name" th:value="#{vet.lastName}"/>
     </div>
     <div class="field">
       <label>Specialities</label>
@@ -42,9 +42,9 @@
         <div class="ui checkbox">
           <!-- todo: replace speciality.name -->
           <!-- todo: set checked status. -->
-          <input type="checkbox" name="${speciality.name}"/>
+          <input type="checkbox" name="#{speciality.name}"/>
           <!-- todo: replace speciality.name -->
-          <label>${speciality.name}</label>
+          <label>#{speciality.name}</label>
         </div>
       </div>
     </div>

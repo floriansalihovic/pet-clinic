@@ -39,8 +39,8 @@
       <div class="field">
         <!-- todo: replace speciality.name. -->
         <div class="ui checkbox">
-          <input type="checkbox" name="${speciality.name}"/>
-          <label>${speciality.name}</label>
+          <input type="checkbox" name="#{speciality.name}"/>
+          <label>#{speciality.name}</label>
         </div>
       </div>
     </div>

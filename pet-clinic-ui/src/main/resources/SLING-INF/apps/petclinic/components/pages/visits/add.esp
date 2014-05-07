@@ -23,22 +23,22 @@
   <h1 class="ui header">Add Pet Visit</h1>
 
   <form method="POST" action="add" role="form" class="ui form">
-    <input name="petId" type="hidden" value="${pet.id}"/>
+    <input name="petId" type="hidden" value="#{pet.id}"/>
 
     <div class="field">
       <label for="ownerName">Owner</label>
       <!-- todo: replace with owner.firstName, owner.lastName. -->
-      <input type="text" id="ownerName" value="${owner.firstName  owner.lastName}" readonly="true"/>
+      <input type="text" id="ownerName" value="#{owner.firstName  owner.lastName}" readonly="true"/>
     </div>
     <div class="field">
       <label for="petName">Pet</label>
       <!-- todo: replace with pet.name. -->
-      <input type="text" id="petName" value="${pet.name}" readonly="true"/>
+      <input type="text" id="petName" value="#{pet.name}" readonly="true"/>
     </div>
     <div class="field">
       <label for="petBirthDate">Birth Date</label>
       <!-- todo: replace with pet.birthDate -->
-      <input type="text" id="petBirthDate" value="${pet.birthDate.toString('dd/MM/yyyy')}" readonly="true"/>
+      <input type="text" id="petBirthDate" value="#{pet.birthDate.toString('dd/MM/yyyy')}" readonly="true"/>
     </div>
     <div class="date field">
       <label for="date">Date</label>

@@ -41,12 +41,12 @@
     <!-- todo: for each vet create a row. -->
     <tr>
       <!-- todo: link to vets.edit.html/vet.path -->
-      <td><a href="#">${vet.firstName vet.lastName}</a></td>
+      <td><a href="#">#{vet.firstName vet.lastName}</a></td>
       <td>
         <div>
           <!-- todo: for each speciality create a span -->
           <!-- todo: replace with speciality.name -->
-          <span class="ui small teal label">${speciality.name}</span>
+          <span class="ui small teal label">#{speciality.name}</span>
         </div>
       </td>
     </tr>
