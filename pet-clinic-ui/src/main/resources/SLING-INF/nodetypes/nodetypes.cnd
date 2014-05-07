@@ -19,14 +19,14 @@
 
 //
 //  You can find out more documentation on this topic 
-//	by following these links:
+//  by following these links:
 //
 //    -  http://sling.apache.org/site/content-loading.html
-//	  -	 http://jackrabbit.apache.org/node-type-notation.html
+//    -  http://jackrabbit.apache.org/node-type-notation.html
 //
 
 <my = 'http://namespace.com/my'>
 
 [my:node] > nt:unstructured
-	- title (string)
-	- description (string)
+    - title (string)
+    - description (string)

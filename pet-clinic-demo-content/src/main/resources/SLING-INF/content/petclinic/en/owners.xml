@@ -20,13 +20,13 @@
   <property>
     <name>sling:resourceType</name>
     <type>String</type>
-    <value>components/pages/petTypes</value>
+    <value>petclinic/components/pages/owners</value>
   </property>
 
   <property>
     <name>jcr:title</name>
     <type>String</type>
-    <value>Pet types</value>
+    <value>Owners</value>
   </property>
 
 </node>
