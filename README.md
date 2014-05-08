@@ -501,6 +501,8 @@ The next script implemented will be used to add an owner. Since the main structu
         input(type:'hidden', name:'_charset_', value:'UTF-8')
         button(type: 'submit', class: 'ui blue submit button', 'Save')
       }
+    }    
+
 
 The code created is creating a static form ... that's it. Sling will take of the rest. Accessing the page from with the application is fairly easy. In ```groovy.html``` the link with the text ```Add Owner``` has to get a proper ```href```.
 
@@ -510,7 +512,27 @@ The code created is creating a static form ... that's it. Sling will take of the
 
 What was just implemented was a new script for resources with a resource type ```'petclinic/components/pages/owners```. That also the reason why linking to ```"${resource.getPath()}.add.html"``` adding new owners is the task. Working on the same resource with a different seelctor is an easy and effective way to add the "add" page.
 
+Implementing a detail view for an owner resource follows the same rules, except that not only a selector ```detail``` is used, but also a suffix. A suffix, in the Sling context is an information, put in the url after the extension set for the resource. For example the path to a resource can be used as a suffix. This construction may lead to weird looking urls but once the concept is clear, it is a very comfortable way to transport data.
 
+[/content/petclinic/en/owners.detail.html/sling/content/owners/georgefranklin](http://localhost:8080/content/petclinic/en/owners.detail.html/sling/content/owners/georgefranklin) is used in ```html.groovy``` to address the resource with the ```detail``` selector and viewing the details of ```/sling/content/owners/georgefranklin```. The ```a``` containing the detail button is now created with the addition information.
+
+    a(href: "${resource.getPath()}.detail.html${ownerResource.getPath()}",
+        "${properties.get('firstName')} ${properties.get('lastName')}")
+
+
+Accessing an owner resource from the path given by the suffix is fairly easy as well.
+
+    import org.apache.sling.api.resource.ValueMap
+    import groovy.xml.MarkupBuilder
+    
+    // getting the user session based resource resolver
+    def resourceResolver = resource.getResourceResolver()
+    // accessing the node containing the owners
+    ownerResource = resourceResolver.getResource(request.getRequestPathInfo().getSuffix())
+    // accessing the owner's properties by adapting the resource to a ValueMap.
+    ownerProps = ownerResource.adaptTo(ValueMap.class)
+
+```request.getRequestPathInfo().getSuffix()``` is the way to access the suffix (and therefore the path to the owner resource). The resource's ResourceReolver is used to access the owner resource and that's it basically. In the rest of the script both references are used to resolve properties and address other pages (the page resource with different seelctors).
 
 
 
