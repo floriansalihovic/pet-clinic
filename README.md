@@ -532,7 +532,7 @@ Accessing an owner resource from the path given by the suffix is fairly easy as 
     // accessing the owner's properties by adapting the resource to a ValueMap.
     ownerProps = ownerResource.adaptTo(ValueMap.class)
 
-```request.getRequestPathInfo().getSuffix()``` is the way to access the suffix (and therefore the path to the owner resource). The resource's ResourceReolver is used to access the owner resource and that's it basically. In the rest of the script both references are used to resolve properties and address other pages (the page resource with different seelctors).
+```request.getRequestPathInfo().getSuffix()``` is the way to access the suffix (and therefore the path to the owner resource). The resource's ResourceReolver is used to access the owner resource and that's it basically. In the rest of the script both references are used to resolve properties and address other pages (the page resource with different selectors).
 
 
 
