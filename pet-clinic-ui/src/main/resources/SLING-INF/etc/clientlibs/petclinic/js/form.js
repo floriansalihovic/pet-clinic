@@ -1,4 +1,8 @@
-$(document).ready(function () {
-  $('.ui.radio.checkbox').checkbox();
-  $('.ui.checkbox').checkbox();
+;
+
+(function () {
+  $(document).ready(function () {
+    $('.ui.radio.checkbox').checkbox();
+    $('.ui.checkbox').checkbox();
+  });
 });

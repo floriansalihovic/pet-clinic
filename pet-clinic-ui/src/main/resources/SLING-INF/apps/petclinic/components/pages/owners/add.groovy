@@ -1,11 +1,6 @@
 import org.apache.sling.api.resource.ValueMap;
 import groovy.xml.MarkupBuilder;
 
-    // getting the user session based resource resolver
-    def resourceResolver = resource.getResourceResolver()
-    // accessing the node containing the owners
-    ownersResource = resourceResolver.getResource('/sling/content/owners')
-
 def builder = new MarkupBuilder(out)
 builder.html {
   head {
@@ -31,47 +26,37 @@ builder.html {
     div(class: 'container') {
       div(class: 'ui grid') {
         div(class: 'seven wide column') {
-          h1(class: 'ui header', 'Owners')
-        }
-        div(class: 'nine wide column') {
-          div(class: 'ui icon input', style: 'float: right; margin-left: 1em;') {
-            form(method: 'GET') {
-              input(name: 'q', type: 'text', placeholder: 'Find owners...')
-            }
-            i(class: 'circular search icon', '')
-          }
-    // todo: link to owners.add.page.
-    a(href: "${resource.getPath()}.add.html", class: 'ui button green',
-        style: 'float: right; margin-left: 1em;', 'Add Owner')
+          h1(class: 'ui header', 'Add Owner')
         }
       }
-      table(class: 'ui table segment') {
-        thead {
-          tr {
-            th('Name'); th('City'); th('Address'); th('Telephone'); th('Pets')
-          }
+      form(class: 'ui form', role: 'form', action: '/sling/content/owners/*', method: 'POST') {
+        div(class: 'field') {
+          label(for: 'firstName', 'First Name:')
+          input(id: 'firstName', name: 'firstName', type: 'text', placeholder: 'First Name')
         }
-    tbody {
-      ownersResource.listChildren().each { resource ->
-        properties = resource.adaptTo(ValueMap.class)
-        tr {
-          td {
-            a(href: '#', "${properties.get('firstName')} ${properties.get('lastName')}")
-          }
-          td(properties.get('city'))
-          td(properties.get('address'))
-          td(properties.get('telephone'))
-          td {
-            div {
-              span(class: 'ui small label teal', 'Janny')
-              span(class: 'ui small label teal', 'Leo')
-              span(class: 'ui small label teal', 'Shaka')
-            }
-          }
+        div(class: 'field') {
+          label(for: 'lastName', 'Last Name:')
+          input(id: 'lastName', name: 'lastName', type: 'text', placeholder: 'Last Name')
         }
+        div(class: 'field') {
+          label(for: 'address', 'Address:')
+          input(id: 'address', name: 'address', type: 'text', placeholder: 'Address')
+        }
+        div(class: 'field') {
+          label(for: 'city', 'City:')
+          input(id: 'city', name: 'city', type: 'text', placeholder: 'City')
+        }
+        div(class: 'field') {
+          label(for: 'telephone', 'Telephone:')
+          input(id: 'telephone', name: 'telephone', type: 'text', placeholder: 'telephone')
+        }
+
+        input(type:'hidden', name:'sling:resourceType', value:'petclinic/components/pages/owners')
+        input(type:'hidden', name:':redirect', value:"${resource.getPath()}.html")
+        input(type:'hidden', name:'_charset_', value:'UTF-8')
+        button(type: 'submit', class: 'ui blue submit button', 'Save')
       }
-    }
-      }
+
       div(class: 'ui divider')
       // todo: create component. -->
       div(class: 'ui divided horizontal footer link list') {
