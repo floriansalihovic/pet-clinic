@@ -1,4 +1,12 @@
-def builder = new groovy.xml.MarkupBuilder(out)
+import org.apache.sling.api.resource.ValueMap;
+import groovy.xml.MarkupBuilder;
+
+    // getting the user session based resource resolver
+    def resourceResolver = resource.getResourceResolver()
+    // accessing the node containing the owners
+    ownersResource = resourceResolver.getResource('/sling/content/owners')
+
+def builder = new MarkupBuilder(out)
 builder.html {
   head {
     meta(charset: 'UTF-8')
@@ -39,30 +47,29 @@ builder.html {
       table(class: 'ui table segment') {
         thead {
           tr {
-            th('Name')
-            th('City')
-            th('Address')
-            th('Telephone')
-            th('Pets')
+            th('Name'); th('City'); th('Address'); th('Telephone'); th('Pets')
           }
         }
-        tbody {
-          tr {
-            td {
-              a(href: '#', 'George Franklin')
-            }
-            td('Madison')
-            td('110 W. Liberty St.')
-            td('6085551023')
-            td {
-              div {
-                span(class: 'ui small label teal', 'Janny')
-                span(class: 'ui small label teal', 'Leo')
-                span(class: 'ui small label teal', 'Shaka')
-              }
+    tbody {
+      ownersResource.listChildren().each { resource ->
+        properties = resource.adaptTo(ValueMap.class)
+        tr {
+          td {
+            a(href: '#', "${properties.get('firstName')} ${properties.get('lastName')}")
+          }
+          td(properties.get('city'))
+          td(properties.get('address'))
+          td(properties.get('telephone'))
+          td {
+            div {
+              span(class: 'ui small label teal', 'Janny')
+              span(class: 'ui small label teal', 'Leo')
+              span(class: 'ui small label teal', 'Shaka')
             }
           }
         }
+      }
+    }
       }
       div(class: 'ui divider')
       // todo: create component. -->
