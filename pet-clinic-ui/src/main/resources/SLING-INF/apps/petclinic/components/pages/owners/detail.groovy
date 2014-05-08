@@ -4,7 +4,8 @@ import groovy.xml.MarkupBuilder
 // getting the user session based resource resolver
 def resourceResolver = resource.getResourceResolver()
 // accessing the node containing the owners
-ownersResource = resourceResolver.getResource('/sling/content/owners')
+ownerResource = resourceResolver.getResource(request.getRequestPathInfo().getSuffix())
+ownerProps = ownerResource.adaptTo(ValueMap.class)
 
 def builder = new MarkupBuilder(out)
 builder.html {
@@ -34,12 +35,8 @@ builder.html {
           h1(class: 'ui header', 'Owners')
         }
         div(class: 'nine wide column') {
-          div(class: 'ui icon input', style: 'float: right; margin-left: 1em;') {
-            form(method: 'GET') {
-              input(name: 'q', type: 'text', placeholder: 'Find owners...')
-            }
-            i(class: 'circular search icon', '')
-          }
+          a(href: "${resource.getPath()}.edit.html", class: 'small ui right floated button blue',
+              style: 'float: right; margin-left: 1em;', 'Add Owner')
         }
       }
       table(class: 'ui table segment') {
@@ -48,28 +45,67 @@ builder.html {
             th 'Name'
             td {
               i(class: 'user icon', '')
-              span 'George Franklin'
+              span "${ownerProps.get('firstName')} ${ownerProps.get('lastName')}"
             }
           }
           tr {
             th 'Address'
             td {
               i(class: 'map marker icon', '')
-              span('Madison, 110 W. Liberty St.')
+              span "${ownerProps.get('city')}, ${ownerProps.get('address')}"
             }
           }
           tr {
             th 'Telephone'
             td {
               i(class: 'phone icon', '')
-              span '6085551023'
+              span "${ownerProps.get('telephone')}"
+            }
+          }
+        }
+      }
+
+      div(class: 'ui grid') {
+        div(class: 'twelve wide column') {
+          h2(class: 'ui header', 'Pets and Visits')
+        }
+        div(class: 'four wide column') {
+          a(class: 'small ui right floated button green', href: '#', 'Add Pet')
+        }
+      }
+
+      table(class: 'ui table segment') {
+        thead {
+          tr {
+            th(style: 'width: 25%', 'Name')
+            th(style: 'width: 25%', 'Type')
+            th(style: 'width: 25%', 'Visit Date')
+            th(style: 'width: 25%', 'Description')
+          }
+        }
+        tbody {
+          tr {
+            td(style: 'vertical-align: top') {
+              a(href: '#', 'Janny')
+            }
+            td(style: 'vertical-align: top', 'Hamster')
+            td(colspan: '2', style: 'padding: 0') {
+              table(class: 'ui table small', style: 'width: 100%') {
+                tbody {
+                  tr {
+                    td(colspan: '2') {
+                      a(class: 'mini ui green button', href: '#', 'Add Visit')
+                    }
+                  }
+                }
+              }
             }
           }
         }
       }
     }
+
     div(class: 'ui divider')
-    // todo: create component. -->
     div(class: 'ui divided horizontal footer link list') {
       div(class: 'item') {
         mkp.yieldUnescaped '&copy; 2014 Florian Salihovic'

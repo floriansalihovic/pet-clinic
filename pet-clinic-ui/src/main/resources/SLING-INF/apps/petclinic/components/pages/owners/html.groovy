@@ -51,11 +51,12 @@ builder.html {
           }
         }
         tbody {
-          ownersResource.listChildren().each { resource ->
-            properties = resource.adaptTo(ValueMap.class)
+          ownersResource.listChildren().each { ownerResource ->
+            properties = ownerResource.adaptTo(ValueMap.class)
             tr {
               td {
-                a(href: '#', "${properties.get('firstName')} ${properties.get('lastName')}")
+                a(href: "${resource.getPath()}.detail.html${ownerResource.getPath()}",
+                    "${properties.get('firstName')} ${properties.get('lastName')}")
               }
               td(properties.get('city'))
               td(properties.get('address'))
