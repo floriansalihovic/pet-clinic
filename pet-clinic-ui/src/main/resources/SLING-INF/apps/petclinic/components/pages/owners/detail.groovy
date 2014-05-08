@@ -37,7 +37,8 @@ builder.html {
         }
         div(class: 'nine wide column') {
           a(href: "${resource.getPath()}.edit.html${ownerResource.getPath()}",
-              class: 'small ui right floated button blue', style: 'float: right; margin-left: 1em;', 'Edit Owner')
+              class: 'small ui right floated button blue',
+              style: 'float: right; margin-left: 1em;', 'Edit Owner')
         }
       }
       table(class: 'ui table segment') {
