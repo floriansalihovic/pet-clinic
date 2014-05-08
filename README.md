@@ -101,6 +101,7 @@ be done in a variety of ways. One would be a simple POST via ```curl```from the 
     curl -FfirstName="George" \
          -FlastName="Franklin" \
          -Faddress="Madison, 110 W. Liberty St." \
+         -Fcity="Madison" \
          -Ftelephone="6085551023" \
          http://localhost:8080/sling/content/owners/georgefranklin
 
@@ -429,3 +430,100 @@ The Groovy scripts will be generating HTML markup matching our templates, simila
 
 
 When having the File System Resource Provider properly configured simply opening [/content/petclinic/en/owners.html](http://localhost:8080/content/petclinic/en/owners.html#) in the browser will output markup similar to the markup provided by the templates. Without any deployment to the running Sling instance - otherwise a deployment is necessay.
+
+That is static markup generation. To access the data in the repository, only a few lines of code have to be changed. Starting by accessing the resource containing the owners provided by the demo content. This can be done by the resources ResourceResolver.
+
+
+    // getting the user session based resource resolver
+    def resourceResolver = resource.getResourceResolver()
+    // accessing the node containing the owners
+    ownersResource = resourceResolver.getResource('/sling/content/owners')
+
+The reference to ```ownersResource``` allows accessing child resources via ```Resource#listChildren```, which returns an ```java.util.Iterator```. Groovy's each method allows some easy iteration over the resources, which should be adapted to a ```org.apache.sling.api.resource.ValueMap``` to access the properties. The tbody's content can be easily generated with the following code.
+
+    tbody {
+      ownersResource.listChildren().each { resource ->
+        properties = resource.adaptTo(ValueMap.class)
+        tr {
+          td {
+            a(href: '#', "${properties.get('firstName')} ${properties.get('lastName')}")
+          }
+          td(properties.get('city'))
+          td(properties.get('address'))
+          td(properties.get('telephone'))
+          td {
+            div {
+              span(class: 'ui small label teal', 'Janny')
+              span(class: 'ui small label teal', 'Leo')
+              span(class: 'ui small label teal', 'Shaka')
+            }
+          }
+        }
+      }
+    }
+
+The ```import``` of ```org.apache.sling.api.resource.ValueMap``` is the last piece of code to be added on top of the script. Refreshing the browser on [/content/petclinic/en/owners.html](http://localhost:8080/content/petclinic/en/owners.html) will display all owners, only the pets will be renderer staticly for now.
+
+### Adding new Owners
+
+The next script implemented will be used to add an owner. Since the main structure of the Groovy script is similar to the one already created to display all users, only necessary content will be posted. Creating a new file ```add.groovy``` based on the code of ```html.groovy```. Replacing the existing ```div(class: 'container') { ... }``` code with the following will create the proper form for adding new owners.
+
+    div(class: 'container') {
+      div(class: 'ui grid') {
+        div(class: 'seven wide column') {
+          h1(class: 'ui header', 'Add Owner')
+        }
+      }
+      form(class: 'ui form', role: 'form', action: '/sling/content/owners/*', method: 'POST') {
+        div(class: 'field') {
+          label(for: 'firstName', 'First Name:')
+          input(id: 'firstName', name: 'firstName', type: 'text', placeholder: 'First Name')
+        }
+        div(class: 'field') {
+          label(for: 'lastName', 'Last Name:')
+          input(id: 'lastName', name: 'lastName', type: 'text', placeholder: 'Last Name')
+        }
+        div(class: 'field') {
+          label(for: 'address', 'Address:')
+          input(id: 'address', name: 'address', type: 'text', placeholder: 'Address')
+        }
+        div(class: 'field') {
+          label(for: 'city', 'City:')
+          input(id: 'city', name: 'city', type: 'text', placeholder: 'City')
+        }
+        div(class: 'field') {
+          label(for: 'telephone', 'Telephone:')
+          input(id: 'telephone', name: 'telephone', type: 'text', placeholder: 'telephone')
+        }
+
+        input(type:'hidden', name:'sling:resourceType', value:'petclinic/components/pages/owners')
+        input(type:'hidden', name:':redirect', value:"${resource.getPath()}.html")
+        input(type:'hidden', name:'_charset_', value:'UTF-8')
+        button(type: 'submit', class: 'ui blue submit button', 'Save')
+      }
+
+The code created is creating a static form ... that's it. Sling will take of the rest. Accessing the page from with the application is fairly easy. In ```groovy.html``` the link with the text ```Add Owner``` has to get a proper ```href```.
+
+    // todo: link to owners.add.page.
+    a(href: "${resource.getPath()}.add.html", class: 'ui button green',
+        style: 'float: right; margin-left: 1em;', 'Add Owner')
+
+What was just implemented was a new script for resources with a resource type ```'petclinic/components/pages/owners```. That also the reason why linking to ```"${resource.getPath()}.add.html"``` adding new owners is the task. Working on the same resource with a different seelctor is an easy and effective way to add the "add" page.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
