@@ -5,6 +5,7 @@ import groovy.xml.MarkupBuilder
 def resourceResolver = resource.getResourceResolver()
 // accessing the node containing the owners
 ownerResource = resourceResolver.getResource(request.getRequestPathInfo().getSuffix())
+// accessing the owner's properties by adapting the resource to a ValueMap.
 ownerProps = ownerResource.adaptTo(ValueMap.class)
 
 def builder = new MarkupBuilder(out)
@@ -35,8 +36,8 @@ builder.html {
           h1(class: 'ui header', 'Owners')
         }
         div(class: 'nine wide column') {
-          a(href: "${resource.getPath()}.edit.html", class: 'small ui right floated button blue',
-              style: 'float: right; margin-left: 1em;', 'Add Owner')
+          a(href: "${resource.getPath()}.edit.html${ownerResource.getPath()}",
+              class: 'small ui right floated button blue', style: 'float: right; margin-left: 1em;', 'Edit Owner')
         }
       }
       table(class: 'ui table segment') {
@@ -64,7 +65,6 @@ builder.html {
           }
         }
       }
-
       div(class: 'ui grid') {
         div(class: 'twelve wide column') {
           h2(class: 'ui header', 'Pets and Visits')
@@ -73,7 +73,6 @@ builder.html {
           a(class: 'small ui right floated button green', href: '#', 'Add Pet')
         }
       }
-
       table(class: 'ui table segment') {
         thead {
           tr {
@@ -104,7 +103,6 @@ builder.html {
         }
       }
     }
-
     div(class: 'ui divider')
     div(class: 'ui divided horizontal footer link list') {
       div(class: 'item') {
