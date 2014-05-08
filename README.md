@@ -5,6 +5,9 @@ This application is intended to provide a fast and easy access to Apache Sling u
 > This tutorial aims to provide an example of how the pieces are connected. Making it easier to start developing
 > with Sling.
 
+
+
+
 ## Before getting started - getting Sling
 
 I highly recommend checking the Sling sources out from the repository (GIT or SVN) and compiling it by hand. The launchpad
@@ -259,14 +262,9 @@ The ```jcr```prefix derives directly from the underlying Java Content Repository
 that is nothing important for now - important is only the fact that we have these two properties. As done in the existing
 pet clinic applications, similar resources are created for veterinarians, specialities and pet types.
 
-With commit [f51b542](https://github.com/floriansalihovic/pet-clinic/commit/aadf5310b1969b48d9bc31b2955188022ab95671) a
-whole bunch of ```.esp``` files with corresponding assets are accessible. The file ending is necessary to indicate those
-files are scripts - jsp and similar file types are fine as well. ```.html``` will be ignored, because it does not play
-well with Sling's script resolution. The ```.esp```files are nothing more then compiled ```.html```files, so nothing
-special invoked or processed at the moment.
+In ```${project.basedir}/src/main/resource/templates``` a bunch of ```.html``` file and assets are placed. In order to test the application, the files can be copied in corresponding the ```pet-clinic-ui``` folder. The ```.html``` files have to get the suffix ```.esp``` for the moment. This is necessary to get the files compiled and applied as a renderer for a resource.
 
-Having demo content in ```/content/petclinic/en``` and renderers as well as assets in place,
-```mvn clean install -PautoInstallBundle``` will deploy the application and makes data accessible. Opening the browser
+Having demo content in ```/content/petclinic/en``` and renderers now as well as assets in place (everything ```/etc```), ```mvn clean install -PautoInstallBundle``` will deploy the application and makes data accessible. Opening the browser
 and visiting [http://localhost:8080/content/petclinic/en/owners.html](http://localhost:8080/content/petclinic/en/owners.html)
 will give a first idea about what the application looks like. But there is more.
 
@@ -287,7 +285,8 @@ first look at the applications look. This will actually use ```/apps/petclinic/c
 render the resource. This is a result of the resource resolution process. Sling takes the path and deconstructs certain
 information from it:
 
-- The resource: the resource is located after ```host:port``` until the first extension (```.html```) in the example's case.
+- The resource: the resource is located after ```host:port``` until the first separator (```.```) or extension
+  (```.html``` in the example's case).
 - The resource type (```sling:resourceType```): The resource type is a property of the resource determining the script
  to render it. When setting the resource types, the initial folder/path segment should be omitted.
  ```petclinic/components/pages/owners``` is the resource type of the requested resource in this example.
@@ -299,3 +298,134 @@ information from it:
 - Selectors: selectors haven't been discussed yet, but are crucial in understanding Sling. Selectors are indicators which
   determine the actual script being invoked when a resource is addressed. Selectors are placed between the resource and its
   extension, separeted by ```.```.
+
+That's quite a bit to grasp. Working examples look as the following:
+
+- [/content/petclinic/en/owners.json](http://localhost:8080/content/petclinic/en/owners.json)
+  Invoking the Sling default json renderer.
+- [/content/petclinic/en/owners.xml](http://localhost:8080/content/petclinic/en/owners.xml)
+  Invoking the Sling default xml renderer.
+- [/content/petclinic/en/owners.html](http://localhost:8080/content/petclinic/en/owners.html)
+  Invoking ```/apps/petclinic/components/pages/owners/html.esp```, no selector is used only a extension is given. Since The file name matches the extension, this script is chosen for rendering.
+- [/content/petclinic/en/owners.add.html](http://localhost:8080/content/petclinic/en/owners.add.html)
+  Selector ```add``` is used, invoking ```/apps/petclinic/components/pages/owners/add.esp```. The file is chosen, because it matches the selector's name.
+- [/content/petclinic/en/owners.edit.html](http://localhost:8080/content/petclinic/en/owners.edit.html)
+  Selector ```edit``` is used, invoking ```/apps/petclinic/components/pages/owners/edit.esp```. The file is chosen, because it matches the selector's name.
+- [/content/petclinic/en/owners.detail.html](http://localhost:8080/content/petclinic/en/owners.detail.html)
+  Selector ```detail``` is used, invoking ```/apps/petclinic/components/pages/owners/detail.esp```. The file is chosen, because it matches the selector's name.
+
+These simple illustrate only a bit of the flexibility Sling provides, for more information please check out the following resources:
+
+- [Sling Cheat Sheet @ dev.day.com](http://dev.day.com/content/ddc/blog/2008/07/cheatsheet.html)
+- [The Basic @ dev.day.com](http://dev.day.com/docs/en/cq/current/developing/the_basics.html)
+- [URL to Script resolution](http://sling.apache.org/documentation/the-sling-engine/url-to-script-resolution.html)
+
+## Working with Groovy in Sling
+
+One objectives of this tutorial is working with Groovy. It is a fun and productive language for the JVM and gains more and more popularity.
+
+Working with Groovy is fairly easy, when starting migrating scripts to Groovy scripts. This will be the first moving being made.
+
+### Excourse: The File System Resource Provider
+
+Everything is a resource - so is the file system. When working on scripts, the File System Resource Provider is a handy tool for short tun around cycles.
+
+At [/system/console/configMgr](http://localhost:8080/system/console/configMgr) all configurations are listed. Add a new configuration for the File System Resource Provider. Set 
+
+- ```Provider Root``` to ```/apps/petclinic```
+- ```Filesystem Root``` to ```${project.basedir}/pet-clinic-ui/src/main/resources/SLING-INF/apps/petclinic```. The ```${project.basedir}``` needs to be replaced by the actual location on the hard drive.
+
+The File System Resource Provider provides access to the file system as the name suggests and provides to access files as resources. In our use case, it provides access to our Groovy scripts from the working directory. This simplifies the workflow by editing scripts only in the ide removing continuous deployment of scripts.
+
+## The first Groovy script
+
+The Groovy scripts will be generating HTML markup matching our templates, similar to the way the esp files did. Groovy scripts provide better readability and more sophisticated programming model. Starting with a Groovy script in ```/${project.basedir}/pet-clinic-ui/src/main/resources/SLING-INF/apps/petclinic/components/owners``` names ```html.groovy```. Paste in the following contents:
+
+
+    def builder = new groovy.xml.MarkupBuilder(out)
+    builder.html {
+      head {
+        meta(charset: 'UTF-8')
+        meta(content: 'IE=edge,chrome=1', 'http-equiv': 'X-UA-Compatible');
+        meta(name: 'viewport', content: 'width=device-width, initial-scale=1.0')
+        link(href: '/etc/clientlibs/petclinic/css/default.css', rel: 'stylesheet')
+        link(href: '/etc/clientlibs/petclinic/css/semantic.min.css', rel: 'stylesheet')
+        script('', type: 'text/javascript', src: '/etc/clientlibs/petclinic/js/jquery-1.11.0.min.js')
+        script('', type: 'text/javascript', src: '/etc/clientlibs/petclinic/js/semantic.min.js')
+        script('', type: 'text/javascript', src: '/etc/clientlibs/petclinic/js/form.js')
+      }
+      body {
+        div(class: 'ui menu teal inverted') {
+          a(class: 'title item', href: '/content/petclinic/en/owners.html') {
+            strong('Pet Clinic')
+          }
+          a(class: 'item', href: '/content/petclinic/en/owners.html', 'Find Owners')
+          a(class: 'item', href: '/content/petclinic/en/vets.html', 'Veterinarians')
+          a(class: 'item', href: '/content/petclinic/en/specialities.html', 'Specialities')
+          a(class: 'item', href: '/content/petclinic/en/petTypes.html', 'Pet Types')
+        }
+        div(class: 'container') {
+          div(class: 'ui grid') {
+            div(class: 'seven wide column') {
+              h1(class: 'ui header', 'Owners')
+            }
+            div(class: 'nine wide column') {
+              div(class: 'ui icon input', style: 'float: right; margin-left: 1em;') {
+                form(method: 'GET') {
+                  input(name: 'q', type: 'text', placeholder: 'Find owners...')
+                }
+                i(class: 'circular search icon', '')
+              }
+              // todo: link to owners.add.page.
+              a(href: '#', class: 'ui button green', style: 'float: right; margin-left: 1em;', 'Add Owner')
+            }
+          }
+          table(class: 'ui table segment') {
+            thead {
+              tr {
+                th('Name')
+                th('City')
+                th('Address')
+                th('Telephone')
+                th('Pets')
+              }
+            }
+            tbody {
+              tr {
+                td {
+                  a(href: '#', 'George Franklin')
+                }
+                td('Madison')
+                td('110 W. Liberty St.')
+                td('6085551023')
+                td {
+                  div {
+                    span(class: 'ui small label teal', 'Janny')
+                    span(class: 'ui small label teal', 'Leo')
+                    span(class: 'ui small label teal', 'Shaka')
+                  }
+                }
+              }
+            }
+          }
+          div(class: 'ui divider')
+          // todo: create component.
+          div(class: 'ui divided horizontal footer link list') {
+            div(class: 'item') {
+              mkp.yieldUnescaped '&copy; 2014 Florian Salihovic'
+            }
+            a(class: 'item', href: 'https://github.com/floriansalihovic/pet-clinic', 'at github');
+            div(class: 'item') {
+              a(href: 'https://sling.apache.org', target: '_blank', 'Powered by Apache Sling')
+            }
+            div(class: 'item') {
+              a(href: 'http://floriansalihovic.github.io', target: '_blank', 'by me')
+            }
+          }
+        }
+      }
+    }
+
+
+
+When having the File System Resource Provider properly configured simply opening [/content/petclinic/en/owners.html](http://localhost:8080/content/petclinic/en/owners.html#) in the browser will output markup similar to the markup provided by the templates. Without any deployment to the running Sling instance - otherwise a deployment is necessay.
