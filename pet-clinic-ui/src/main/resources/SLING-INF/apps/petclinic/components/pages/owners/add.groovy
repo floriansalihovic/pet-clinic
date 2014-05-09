@@ -51,25 +51,26 @@ builder.html {
           input(id: 'telephone', name: 'telephone', type: 'text', placeholder: 'telephone')
         }
 
-        input(type:'hidden', name:'sling:resourceType', value:'petclinic/components/pages/owners')
-        input(type:'hidden', name:':redirect', value:"${resource.getPath()}.html")
-        input(type:'hidden', name:'_charset_', value:'UTF-8')
+        input(type: 'hidden', name: 'sling:resourceType', value: 'petclinic/components/pages/owners')
+        input(type: 'hidden', name: ':redirect', value: "${resource.getPath()}.html")
+        input(type: 'hidden', name: '_charset_', value: 'UTF-8')
         button(type: 'submit', class: 'ui blue submit button', 'Save')
       }
-
-      div(class: 'ui divider')
-      // todo: create component. -->
-      div(class: 'ui divided horizontal footer link list') {
-        div(class: 'item') {
-          mkp.yieldUnescaped '&copy; 2014 Florian Salihovic'
-        }
-        a(class: 'item', href: 'https://github.com/floriansalihovic/pet-clinic', 'at github');
-        div(class: 'item') {
-          a(href: 'https://sling.apache.org', target: '_blank', 'Powered by Apache Sling')
-        }
-        div(class: 'item') {
-          a(href: 'http://floriansalihovic.github.io', target: '_blank', 'by me')
-        }
+    };
+    div(class: 'ui divider') {
+      mkp.yield('')
+    };
+    // todo: create component. -->
+    div(class: 'ui divided horizontal footer link list') {
+      div(class: 'item') {
+        mkp.yieldUnescaped '&copy; 2014 Florian Salihovic'
+      }
+      a(class: 'item', href: 'https://github.com/floriansalihovic/pet-clinic', 'at github');
+      div(class: 'item') {
+        a(href: 'https://sling.apache.org', target: '_blank', 'Powered by Apache Sling')
+      }
+      div(class: 'item') {
+        a(href: 'http://floriansalihovic.github.io', target: '_blank', 'by me')
       }
     }
   }

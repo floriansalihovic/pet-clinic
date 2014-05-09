@@ -106,7 +106,10 @@ builder.html {
         }
       }
     }
-    div(class: 'ui divider')
+    div(class: 'ui divider') {
+      mkp.yield('')
+    };
+    // todo: create component. -->
     div(class: 'ui divided horizontal footer link list') {
       div(class: 'item') {
         mkp.yieldUnescaped '&copy; 2014 Florian Salihovic'
