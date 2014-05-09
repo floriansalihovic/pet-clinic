@@ -1,10 +1,14 @@
 import org.apache.sling.api.resource.ValueMap
 import groovy.xml.MarkupBuilder
 
-// getting the user session based resource resolver
+// the suffix pointing to an owner resource
+def suffix = request.getRequestPathInfo().getSuffix()
+// the user session based resource resolver
 def resourceResolver = resource.getResourceResolver()
-// accessing the node containing the owners
-def ownersResource = resourceResolver.getResource('/sling/content/owners')
+// the owner resource
+def ownerResource = resourceResolver.getResource(suffix)
+// accessing the owner's properties by adapting the resource to a ValueMap.
+def ownerProps = ownerResource.adaptTo(ValueMap.class)
 
 def builder = new MarkupBuilder(out)
 builder.html {
@@ -31,47 +35,42 @@ builder.html {
     div(class: 'container') {
       div(class: 'ui grid') {
         div(class: 'seven wide column') {
-          h1(class: 'ui header', 'Owners')
-        }
-        div(class: 'nine wide column') {
-          div(class: 'ui icon input', style: 'float: right; margin-left: 1em;') {
-            form(method: 'GET') {
-              input(name: 'q', type: 'text', placeholder: 'Find owners...')
-            }
-            i(class: 'circular search icon', '')
-          }
-          a(href: "${resource.getPath()}.add.html", class: 'ui button green',
-              style: 'float: right; margin-left: 1em;', 'Add Owner')
+          h1(class: 'ui header', 'Add Owner')
         }
       }
-      table(class: 'ui table segment') {
-        thead {
-          tr {
-            th('Name'); th('City'); th('Address'); th('Telephone'); th('Pets')
-          }
-        }
-        tbody {
-          ownersResource.listChildren().each { ownerResource ->
-            properties = ownerResource.adaptTo(ValueMap.class)
-            tr {
-              td {
-                a(href: "${resource.getPath()}.detail.html${ownerResource.getPath()}",
-                    "${properties.get('firstName')} ${properties.get('lastName')}")
-              }
-              td(properties.get('city'))
-              td(properties.get('address'))
-              td(properties.get('telephone'))
-              td {
-                div {
-                  span(class: 'ui small label teal', 'Janny')
-                  span(class: 'ui small label teal', 'Leo')
-                  span(class: 'ui small label teal', 'Shaka')
-                }
-              }
-            }
-          }
-        }
+    form(class: 'ui form', role: 'form', action: suffix, method: 'POST') {
+      div(class: 'field') {
+        label(for: 'firstName', 'First Name:')
+        input(id: 'firstName', name: 'firstName', type: 'text', placeholder: 'First Name',
+            value: "${ownerProps.get('firstName')}")
       }
+      div(class: 'field') {
+        label(for: 'lastName', 'Last Name:')
+        input(id: 'lastName', name: 'lastName', type: 'text', placeholder: 'Last Name',
+            value: "${ownerProps.get('lastName')}")
+      }
+      div(class: 'field') {
+        label(for: 'address', 'Address:')
+        input(id: 'address', name: 'address', type: 'text', placeholder: 'Address',
+            value: "${ownerProps.get('address')}")
+      }
+      div(class: 'field') {
+        label(for: 'city', 'City:')
+        input(id: 'city', name: 'city', type: 'text', placeholder: 'City',
+            value: "${ownerProps.get('city')}")
+      }
+      div(class: 'field') {
+        label(for: 'telephone', 'Telephone:')
+        input(id: 'telephone', name: 'telephone', type: 'text', placeholder: 'telephone',
+            value: "${ownerProps.get('telephone')}")
+      }
+
+      input(type: 'hidden', name: 'sling:resourceType', value: 'petclinic/components/pages/owners')
+      input(type: 'hidden', name: ':redirect', value: "${resource.getPath()}.html")
+      input(type: 'hidden', name: '_charset_', value: 'UTF-8')
+      button(type: 'submit', class: 'ui blue submit button', 'Save')
+    }
+
       div(class: 'ui divider')
       // todo: create component. -->
       div(class: 'ui divided horizontal footer link list') {

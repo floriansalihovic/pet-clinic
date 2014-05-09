@@ -1,12 +1,14 @@
 import org.apache.sling.api.resource.ValueMap
 import groovy.xml.MarkupBuilder
 
-// getting the user session based resource resolver
+// the suffix pointing to an owner resource
+def suffix = request.getRequestPathInfo().getSuffix()
+// the user session based resource resolver
 def resourceResolver = resource.getResourceResolver()
-// accessing the node containing the owners
-ownerResource = resourceResolver.getResource(request.getRequestPathInfo().getSuffix())
+// the owner resource
+def ownerResource = resourceResolver.getResource(suffix)
 // accessing the owner's properties by adapting the resource to a ValueMap.
-ownerProps = ownerResource.adaptTo(ValueMap.class)
+def ownerProps = ownerResource.adaptTo(ValueMap.class)
 
 def builder = new MarkupBuilder(out)
 builder.html {
