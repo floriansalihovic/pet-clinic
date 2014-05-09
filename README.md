@@ -525,15 +525,51 @@ Accessing an owner resource from the path given by the suffix is fairly easy as 
     import org.apache.sling.api.resource.ValueMap
     import groovy.xml.MarkupBuilder
     
-    // getting the user session based resource resolver
+    // the suffix pointing to an owner resource
+    def suffix = request.getRequestPathInfo().getSuffix()
+    // the user session based resource resolver
     def resourceResolver = resource.getResourceResolver()
-    // accessing the node containing the owners
-    ownerResource = resourceResolver.getResource(request.getRequestPathInfo().getSuffix())
+    // the owner resource
+    def ownerResource = resourceResolver.getResource(suffix)
     // accessing the owner's properties by adapting the resource to a ValueMap.
-    ownerProps = ownerResource.adaptTo(ValueMap.class)
+    def ownerProps = ownerResource.adaptTo(ValueMap.class)
 
 ```request.getRequestPathInfo().getSuffix()``` is the way to access the suffix (and therefore the path to the owner resource). The resource's ResourceReolver is used to access the owner resource and that's it basically. In the rest of the script both references are used to resolve properties and address other pages (the page resource with different selectors).
 
+This is the way the edit page for an owner will be implemented as well, by passing the path to an owner via suffix, getting the resource and setting the values for the form. The form's action will point to the suffix, which is an existing resource. The form will write the owner's properties in the form and basically overwrite the existing resource. That's a straight forward approach.
+
+    form(class: 'ui form', role: 'form', action: suffix, method: 'POST') {
+      div(class: 'field') {
+        label(for: 'firstName', 'First Name:')
+        input(id: 'firstName', name: 'firstName', type: 'text', placeholder: 'First Name',
+            value: "${ownerProps.get('firstName')}")
+      }
+      div(class: 'field') {
+        label(for: 'lastName', 'Last Name:')
+        input(id: 'lastName', name: 'lastName', type: 'text', placeholder: 'Last Name',
+            value: "${ownerProps.get('lastName')}")
+      }
+      div(class: 'field') {
+        label(for: 'address', 'Address:')
+        input(id: 'address', name: 'address', type: 'text', placeholder: 'Address',
+            value: "${ownerProps.get('address')}")
+      }
+      div(class: 'field') {
+        label(for: 'city', 'City:')
+        input(id: 'city', name: 'city', type: 'text', placeholder: 'City',
+            value: "${ownerProps.get('city')}")
+      }
+      div(class: 'field') {
+        label(for: 'telephone', 'Telephone:')
+        input(id: 'telephone', name: 'telephone', type: 'text', placeholder: 'telephone',
+            value: "${ownerProps.get('telephone')}")
+      }
+
+      input(type: 'hidden', name: 'sling:resourceType', value: 'petclinic/components/pages/owners')
+      input(type: 'hidden', name: ':redirect', value: "${resource.getPath()}.html")
+      input(type: 'hidden', name: '_charset_', value: 'UTF-8')
+      button(type: 'submit', class: 'ui blue submit button', 'Save')
+    }
 
 
 
