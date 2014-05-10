@@ -571,12 +571,108 @@ This is the way the edit page for an owner will be implemented as well, by passi
       button(type: 'submit', class: 'ui blue submit button', 'Save')
     }
 
+## About owners and pets
+
+Owners have pets, pets have owners. A simple relationship of resources, which can be easily expressed by a resource/child-resource relationship. A pet will be added to the owner's resource pet child resource. The first part of the form will be created similar to the other forms in the application. But the attribute petType will be chosen via radio button. The types being selectable are stored in the repository and read to create the inputs dynamically. The pet types will be stored in ```/sling/content/petTypes```.
+
+    <?xml version="1.0" encoding="UTF-8"?>
+    <node>
+      <primaryNodeType>nt:unstructured</primaryNodeType>
+    
+      <property>
+        <name>name</name>
+        <type>String</type>
+        <value>Bird</value>
+      </property>
+    
+    </node>
+
+In the demo content, resources for Bird, Cat, Dog, Hamster, Lizard and Snake are created. In the ```pom.xml```, the path for the petTypes resource has to be added to the ```Sling-Initial-Content``` node.
+
+    <plugin>
+      <groupId>org.apache.felix</groupId>
+      <artifactId>maven-bundle-plugin</artifactId>
+      <extensions>true</extensions>
+      <version>2.4.0</version>
+      <configuration>
+        <instructions>
+          <Sling-Nodetypes>SLING-INF/nodetypes/nodetypes.cnd</Sling-Nodetypes>
+          <Sling-Initial-Content>
+            SLING-INF/apps;overwrite:=true;uninstall:=true;path:=/apps,
+            SLING-INF/content;overwrite:=true;uninstall:=true;path:=/content,
+            SLING-INF/sling/content/owners;overwrite:=true;uninstall:=true;path:=/sling/content/owners,
+            SLING-INF/sling/content/petTypes;overwrite:=true;uninstall:=true;path:=/sling/content/petTypes
+          </Sling-Initial-Content>
+        </instructions>
+      </configuration>
+    </plugin>
+
+Otherwise the petTypes resources won't be deployed.
+
+Since the techniques used in the new pages created are similar to the ones already used, the main differences and edits are pointed out. ```add.groovy``` and ```edit.groovy``` are quite similar. ```edit.groovy``` is a little more complex, since it reads existing resources and set form data.
+
+    // the suffix pointing to an pet resource
+    def suffix = request.getRequestPathInfo().getSuffix()
+    // the user session based resource resolver
+    def resourceResolver = resource.getResourceResolver()
+    // the pet resource
+    def petResource = resourceResolver.getResource(suffix);
+    // the pet resource
+    def petProps = petResource.adaptTo(ValueMap.class);
+    // the pet's owner resource (pet.pets.owner)
+    def ownerResource = petResource.getParent().getParent()
+    // accessing the owner's properties by adapting the resource to a ValueMap.
+    def ownerProps = ownerResource.adaptTo(ValueMap.class)
+    
+    def petTypesResource = resourceResolver.getResource('/sling/content/petTypes')
+    
+Here, a lot of similarities to other scripts are found. The main difference is the implicit relationship between owners and pets shown via ```def ownerResource = petResource.getParent().getParent()```. An interesting part of the script is the creation of the pet type selection.
+
+    div(class: 'grouped inline fields ui segment') {
+      petTypesResource.listChildren().each { petTypeResource ->
+        def petTypeProperties = petTypeResource.adaptTo(ValueMap.class)
+        div(class: 'field') {
+          div(class: 'ui radio checkbox') {
+            if (petTypeResource.getPath() == petProps.get('typeId'))
+              input(type: 'radio', name: 'typeId', value: "${petTypeResource.getPath()}", checked:'checked')
+            else
+              input(type: 'radio', name: 'typeId', value: "${petTypeResource.getPath()}")
+            label("${petTypeProperties.get('name')}")
+          }
+        }
+      }
+    }
+
+The loop not only creates the radio buttons, but also pre-selects the radio button with the pet's type. The creation of the table body in ```/apps/petclinic/components/pages/html.groovy``` will also be refactored to dynamically render in the names of the pets.
+
+    tbody {
+      ownersResource.listChildren().each { ownerResource ->
+        def ownerProps = ownerResource.adaptTo(ValueMap.class)
+        tr {
+          td {
+            a(href: "${resource.getPath()}.detail.html${ownerResource.getPath()}",
+                "${ownerProps.get('firstName')} ${ownerProps.get('lastName')}")
+          }
+          td(ownerProps.get('city'))
+          td(ownerProps.get('address'))
+          td(ownerProps.get('telephone'))
+          td {
+            def petsResource = ownerResource.getChild('pets')
+            if (petsResource) {
+              div {
+                petsResource.listChildren().each { petResource ->
+                  def petProps = petResource.adaptTo(ValueMap.class)
+                  span(class: 'ui small label teal', "${petProps.get('name')}")
+                }
+              }
+            }
+          }
+        }
+      }
+    }
 
 
-
-
-
-
+ 
 
 
 
