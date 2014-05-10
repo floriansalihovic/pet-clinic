@@ -9,15 +9,12 @@ def resourceResolver = resource.getResourceResolver()
 def petResource = resourceResolver.getResource(suffix);
 // the pet resource
 def petProps = petResource.adaptTo(ValueMap.class);
-// the pet's owner resource
+// the pet's owner resource (pet.pets.owner)
 def ownerResource = petResource.getParent().getParent()
 // accessing the owner's properties by adapting the resource to a ValueMap.
 def ownerProps = ownerResource.adaptTo(ValueMap.class)
 
 def petTypesResource = resourceResolver.getResource('/sling/content/petTypes')
-
-def setChecked(input, petProperties, petTypesResource) {
-}
 
 def builder = new MarkupBuilder(out)
 builder.html {
@@ -69,7 +66,7 @@ builder.html {
             div(class: 'field') {
               div(class: 'ui radio checkbox') {
                 if (petTypeResource.getPath() == petProps.get('typeId'))
-                  input(type: 'radio', name: 'typeId', value: "${petTypeResource.getPath()}", checked:'checked')
+                  input(type: 'radio', name: 'typeId', value: "${petTypeResource.getPath()}", checked: 'checked')
                 else
                   input(type: 'radio', name: 'typeId', value: "${petTypeResource.getPath()}")
                 label("${petTypeProperties.get('name')}")

@@ -65,7 +65,7 @@ builder.html {
                 def petsResource = ownerResource.getChild('pets')
                 if (petsResource) {
                   div {
-                  petsResource.listChildren().each { petResource ->
+                    petsResource.listChildren().each { petResource ->
                       def petProps = petResource.adaptTo(ValueMap.class)
                       span(class: 'ui small label teal', "${petProps.get('name')}")
                     }
