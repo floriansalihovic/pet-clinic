@@ -52,20 +52,24 @@ builder.html {
         }
         tbody {
           ownersResource.listChildren().each { ownerResource ->
-            properties = ownerResource.adaptTo(ValueMap.class)
+            def ownerProps = ownerResource.adaptTo(ValueMap.class)
             tr {
               td {
                 a(href: "${resource.getPath()}.detail.html${ownerResource.getPath()}",
-                    "${properties.get('firstName')} ${properties.get('lastName')}")
+                    "${ownerProps.get('firstName')} ${ownerProps.get('lastName')}")
               }
-              td(properties.get('city'))
-              td(properties.get('address'))
-              td(properties.get('telephone'))
+              td(ownerProps.get('city'))
+              td(ownerProps.get('address'))
+              td(ownerProps.get('telephone'))
               td {
-                div {
-                  span(class: 'ui small label teal', 'Janny')
-                  span(class: 'ui small label teal', 'Leo')
-                  span(class: 'ui small label teal', 'Shaka')
+                def petsResource = ownerResource.getChild('pets')
+                if (petsResource) {
+                  div {
+                  petsResource.listChildren().each { petResource ->
+                      def petProps = petResource.adaptTo(ValueMap.class)
+                      span(class: 'ui small label teal', "${petProps.get('name')}")
+                    }
+                  }
                 }
               }
             }
