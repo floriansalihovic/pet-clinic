@@ -22,6 +22,24 @@
             prompt: 'Please enter birth date'
           }
         ]
+      },
+      date: {
+        identifier: 'date',
+        rules: [
+          {
+            type: 'empty',
+            prompt: 'Please date'
+          }
+        ]
+      },
+      description: {
+        identifier: 'description',
+        rules: [
+          {
+            type: 'empty',
+            prompt: 'Please description'
+          }
+        ]
       }
     });
   });
