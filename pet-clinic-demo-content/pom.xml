@@ -45,7 +45,8 @@
             SLING-INF/content;overwrite:=true;uninstall:=true;path:=/content,
             SLING-INF/sling/content/owners;overwrite:=true;uninstall:=true;path:=/sling/content/owners,
             SLING-INF/sling/content/petTypes;overwrite:=true;uninstall:=true;path:=/sling/content/petTypes,
-            SLING-INF/sling/content/specialities;overwrite:=true;uninstall:=true;path:=/sling/content/specialities
+            SLING-INF/sling/content/specialities;overwrite:=true;uninstall:=true;path:=/sling/content/specialities,
+            SLING-INF/sling/content/veterinarians;overwrite:=true;uninstall:=true;path:=/sling/content/veterinarians
           </Sling-Initial-Content>
         </instructions>
       </configuration>
