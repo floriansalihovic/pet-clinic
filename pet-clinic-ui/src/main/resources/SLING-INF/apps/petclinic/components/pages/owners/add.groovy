@@ -1,5 +1,4 @@
-import org.apache.sling.api.resource.ValueMap;
-import groovy.xml.MarkupBuilder;
+import groovy.xml.MarkupBuilder
 
 def builder = new MarkupBuilder(out)
 builder.html {
@@ -60,7 +59,6 @@ builder.html {
     div(class: 'ui divider') {
       mkp.yield('')
     };
-    // todo: create component. -->
     div(class: 'ui divided horizontal footer link list') {
       div(class: 'item') {
         mkp.yieldUnescaped '&copy; 2014 Florian Salihovic'

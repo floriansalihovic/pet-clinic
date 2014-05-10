@@ -1,5 +1,5 @@
-import org.apache.sling.api.resource.ValueMap
 import groovy.xml.MarkupBuilder
+import org.apache.sling.api.resource.ValueMap
 
 // getting the user session based resource resolver
 def resourceResolver = resource.getResourceResolver()
@@ -80,7 +80,6 @@ builder.html {
     div(class: 'ui divider') {
       mkp.yield('')
     };
-    // todo: create component. -->
     div(class: 'ui divided horizontal footer link list') {
       div(class: 'item') {
         mkp.yieldUnescaped '&copy; 2014 Florian Salihovic'
