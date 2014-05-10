@@ -1,0 +1,8 @@
+{
+  "jcr:primaryType": "nt:unstructured",
+  "firstName": "Sharon",
+  "lastName": "Jenkins",
+  "specialities": [
+    "/sling/content/specialities/radiology"
+  ]
+}
