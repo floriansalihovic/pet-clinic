@@ -12,7 +12,6 @@ def ownerProps = ownerResource.adaptTo(ValueMap.class)
 // the pets resource
 def petsResource = ownerResource.getChild('pets')
 
-
 def builder = new MarkupBuilder(out)
 builder.html {
   head {
@@ -89,21 +88,23 @@ builder.html {
           }
         }
         tbody {
-          petsResource.listChildren().each { petResource ->
-            tr {
-              def petProps = petResource.adaptTo(ValueMap.class)
-              def petTypeResource = resourceResolver.getResource(petProps.get('typeId'))
-              def petTypeProps = petTypeResource.adaptTo(ValueMap.class)
-              td(style: 'vertical-align: top') {
-                a(href: "/content/petclinic/en/pets.edit.html${petResource.getPath()}", "${petProps.get('name')}")
-              }
-              td(style: 'vertical-align: top', "${petTypeProps.get('name')}")
-              td(colspan: '2', style: 'padding: 0') {
-                table(class: 'ui table small', style: 'width: 100%') {
-                  tbody {
-                    tr {
-                      td(colspan: '2') {
-                        a(class: 'mini ui green button', href: '#', 'Add Visit')
+          if (petsResource) {
+            petsResource.listChildren().each { petResource ->
+              tr {
+                def petProps = petResource.adaptTo(ValueMap.class)
+                def petTypeResource = resourceResolver.getResource(petProps.get('typeId'))
+                def petTypeProps = petTypeResource.adaptTo(ValueMap.class)
+                td(style: 'vertical-align: top') {
+                  a(href: "/content/petclinic/en/pets.edit.html${petResource.getPath()}", "${petProps.get('name')}")
+                }
+                td(style: 'vertical-align: top', "${petTypeProps.get('name')}")
+                td(colspan: '2', style: 'padding: 0') {
+                  table(class: 'ui table small', style: 'width: 100%') {
+                    tbody {
+                      tr {
+                        td(colspan: '2') {
+                          a(class: 'mini ui green button', href: '#', 'Add Visit')
+                        }
                       }
                     }
                   }
