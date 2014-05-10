@@ -32,22 +32,23 @@
 
   <build>
     <plugins>
-      <plugin>
-        <groupId>org.apache.felix</groupId>
-        <artifactId>maven-bundle-plugin</artifactId>
-        <extensions>true</extensions>
-        <version>2.4.0</version>
-        <configuration>
-          <instructions>
-            <Sling-Nodetypes>SLING-INF/nodetypes/nodetypes.cnd</Sling-Nodetypes>
-            <Sling-Initial-Content>
-              SLING-INF/apps;overwrite:=true;uninstall:=true;path:=/apps,
-              SLING-INF/content;overwrite:=true;uninstall:=true;path:=/content,
-              SLING-INF/sling/content/owners;overwrite:=true;uninstall:=true;path:=/sling/content/owners
-            </Sling-Initial-Content>
-          </instructions>
-        </configuration>
-      </plugin>
+    <plugin>
+      <groupId>org.apache.felix</groupId>
+      <artifactId>maven-bundle-plugin</artifactId>
+      <extensions>true</extensions>
+      <version>2.4.0</version>
+      <configuration>
+        <instructions>
+          <Sling-Nodetypes>SLING-INF/nodetypes/nodetypes.cnd</Sling-Nodetypes>
+          <Sling-Initial-Content>
+            SLING-INF/apps;overwrite:=true;uninstall:=true;path:=/apps,
+            SLING-INF/content;overwrite:=true;uninstall:=true;path:=/content,
+            SLING-INF/sling/content/owners;overwrite:=true;uninstall:=true;path:=/sling/content/owners,
+            SLING-INF/sling/content/petTypes;overwrite:=true;uninstall:=true;path:=/sling/content/petTypes
+          </Sling-Initial-Content>
+        </instructions>
+      </configuration>
+    </plugin>
     </plugins>
   </build>
   <profiles>
