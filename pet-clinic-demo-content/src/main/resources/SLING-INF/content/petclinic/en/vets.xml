@@ -20,7 +20,7 @@
   <property>
     <name>sling:resourceType</name>
     <type>String</type>
-    <value>petclinic/components/pages/veterinarians</value>
+    <value>petclinic/components/pages/vets</value>
   </property>
 
   <property>
