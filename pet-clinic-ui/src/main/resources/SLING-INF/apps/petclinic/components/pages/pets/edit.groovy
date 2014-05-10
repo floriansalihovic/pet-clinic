@@ -1,16 +1,23 @@
 import groovy.xml.MarkupBuilder
 import org.apache.sling.api.resource.ValueMap
 
-// the suffix pointing to an owner resource
+// the suffix pointing to an pet resource
 def suffix = request.getRequestPathInfo().getSuffix()
 // the user session based resource resolver
 def resourceResolver = resource.getResourceResolver()
-// the owner resource
-def ownerResource = resourceResolver.getResource(suffix)
+// the pet resource
+def petResource = resourceResolver.getResource(suffix);
+// the pet resource
+def petProps = petResource.adaptTo(ValueMap.class);
+// the pet's owner resource
+def ownerResource = petResource.getParent().getParent()
 // accessing the owner's properties by adapting the resource to a ValueMap.
 def ownerProps = ownerResource.adaptTo(ValueMap.class)
 
 def petTypesResource = resourceResolver.getResource('/sling/content/petTypes')
+
+def setChecked(input, petProperties, petTypesResource) {
+}
 
 def builder = new MarkupBuilder(out)
 builder.html {
@@ -40,26 +47,31 @@ builder.html {
           h1(class: 'ui header', 'Add Pet')
         }
       }
-      form(class: 'ui form', role: 'form', action: "${suffix}/pets/*", method: 'POST') {
+      form(class: 'ui form', role: 'form', action: "${petResource.getPath()}", method: 'POST') {
         div(class: 'field') {
           label(for: 'firstName', 'First Name:')
           input(id: 'firstName', name: 'firstName', type: 'text',
-              placeholder: "${ownerProps.get('firstName')} ${ownerProps.get('lastName')}", readonly:'true')
+              placeholder: "${ownerProps.get('firstName')} ${ownerProps.get('lastName')}", readonly: 'true')
         }
         div(class: 'field') {
           label(for: 'name', 'Name:')
-          input(id: 'name', name: 'name', type: 'text', placeholder: 'Name')
+          input(id: 'name', name: 'name', type: 'text', placeholder: 'Name',
+              value: "${petResource.getName()}")
         }
         div(class: 'field') {
           label(for: 'birthDate', 'Birth Date:')
-          input(id: 'birthDate', name: 'birthDate', type: 'text', placeholder: 'dd/MM/yy')
+          input(id: 'birthDate', name: 'birthDate', type: 'text', placeholder: 'dd/MM/yy',
+              value: "${petProps.get('birthDate')}")
         }
-        div(class:'grouped inline fields ui segment') {
+        div(class: 'grouped inline fields ui segment') {
           petTypesResource.listChildren().each { petTypeResource ->
             def petTypeProperties = petTypeResource.adaptTo(ValueMap.class)
-            div(class:'field') {
-              div (class:'ui radio checkbox') {
-                input(type:'radio', name:'typeId', value:"${petTypeResource.getPath()}")
+            div(class: 'field') {
+              div(class: 'ui radio checkbox') {
+                if (petTypeResource.getPath() == petProps.get('typeId'))
+                  input(type: 'radio', name: 'typeId', value: "${petTypeResource.getPath()}", checked:'checked')
+                else
+                  input(type: 'radio', name: 'typeId', value: "${petTypeResource.getPath()}")
                 label("${petTypeProperties.get('name')}")
               }
             }

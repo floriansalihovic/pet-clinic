@@ -2,7 +2,27 @@
 
 (function () {
   $(document).ready(function () {
-    $('.ui.radio.checkbox').checkbox();
     $('.ui.checkbox').checkbox();
+    $('.ui.radio.checkbox').checkbox();
+    $(".ui.form").form({
+      name: {
+        identifier: 'name',
+        rules: [
+          {
+            type: 'empty',
+            prompt: 'Please enter pet name'
+          }
+        ]
+      },
+      birthDate: {
+        identifier: 'birthDate',
+        rules: [
+          {
+            type: 'empty',
+            prompt: 'Please enter birth date'
+          }
+        ]
+      }
+    });
   });
-});
+}());

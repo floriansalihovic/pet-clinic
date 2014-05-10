@@ -9,6 +9,9 @@ def resourceResolver = resource.getResourceResolver()
 def ownerResource = resourceResolver.getResource(suffix)
 // accessing the owner's properties by adapting the resource to a ValueMap.
 def ownerProps = ownerResource.adaptTo(ValueMap.class)
+// the pets resource
+def petsResource = ownerResource.getChild('pets')
+
 
 def builder = new MarkupBuilder(out)
 builder.html {
@@ -73,7 +76,7 @@ builder.html {
           h2(class: 'ui header', 'Pets and Visits')
         }
         div(class: 'four wide column') {
-          a(class: 'small ui right floated button green', href: '#', 'Add Pet')
+          a(class: 'small ui right floated button green', href: "/content/petclinic/en/pets.add.html${suffix}", 'Add Pet')
         }
       }
       table(class: 'ui table segment') {
@@ -86,17 +89,22 @@ builder.html {
           }
         }
         tbody {
-          tr {
-            td(style: 'vertical-align: top') {
-              a(href: '#', 'Janny')
-            }
-            td(style: 'vertical-align: top', 'Hamster')
-            td(colspan: '2', style: 'padding: 0') {
-              table(class: 'ui table small', style: 'width: 100%') {
-                tbody {
-                  tr {
-                    td(colspan: '2') {
-                      a(class: 'mini ui green button', href: '#', 'Add Visit')
+          petsResource.listChildren().each { petResource ->
+            tr {
+              def petProps = petResource.adaptTo(ValueMap.class)
+              def petTypeResource = resourceResolver.getResource(petProps.get('typeId'))
+              def petTypeProps = petTypeResource.adaptTo(ValueMap.class)
+              td(style: 'vertical-align: top') {
+                a(href: "/content/petclinic/en/pets.edit.html${petResource.getPath()}", "${petProps.get('name')}")
+              }
+              td(style: 'vertical-align: top', "${petTypeProps.get('name')}")
+              td(colspan: '2', style: 'padding: 0') {
+                table(class: 'ui table small', style: 'width: 100%') {
+                  tbody {
+                    tr {
+                      td(colspan: '2') {
+                        a(class: 'mini ui green button', href: '#', 'Add Visit')
+                      }
                     }
                   }
                 }
