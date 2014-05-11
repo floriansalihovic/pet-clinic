@@ -101,9 +101,23 @@ builder.html {
                 td(colspan: '2', style: 'padding: 0') {
                   table(class: 'ui table small', style: 'width: 100%') {
                     tbody {
+                      def visitsResource = petResource.getChild('visits')
+                      if (visitsResource) {
+                        visitsResource.listChildren().each { visitResource ->
+                          def visitProps = visitResource.adaptTo(ValueMap.class)
+                          tr {
+                            td(style: 'width:50%') {
+                              a(href: "/content/petclinic/en/visits.edit.html${visitResource.getPath()}",
+                                  "${visitProps.get('date')}")
+                            }
+                            td(style: 'width:50%', "${visitProps.get('description')}")
+                          }
+                        }
+                      }
                       tr {
                         td(colspan: '2') {
-                          a(class: 'mini ui green button', href: '#', 'Add Visit')
+                          a(class: 'mini ui green button',
+                              href: "/content/petclinic/en/visits.add.html${petResource.getPath()}", 'Add Visit')
                         }
                       }
                     }
