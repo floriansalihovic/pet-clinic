@@ -61,7 +61,7 @@ builder.html {
         }
         div(class: 'field') {
           label(for: 'telephone', 'Telephone:')
-          input(id: 'telephone', name: 'telephone', type: 'text', placeholder: 'telephone',
+          input(id: 'telephone', name: 'telephone', type: 'text', placeholder: 'Telephone',
               value: "${ownerProps.get('telephone')}")
         }
 

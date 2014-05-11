@@ -1,5 +1,4 @@
 import groovy.xml.MarkupBuilder
-import org.apache.sling.api.resource.ValueMap
 
 // getting the user session based resource resolver
 def resourceResolver = resource.getResourceResolver()

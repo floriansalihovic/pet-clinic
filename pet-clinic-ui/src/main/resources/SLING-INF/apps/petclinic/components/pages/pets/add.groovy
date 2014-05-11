@@ -44,7 +44,7 @@ builder.html {
         div(class: 'field') {
           label(for: 'firstName', 'First Name:')
           input(id: 'firstName', name: 'firstName', type: 'text',
-              placeholder: "${ownerProps.get('firstName')} ${ownerProps.get('lastName')}", readonly:'true')
+              placeholder: "${ownerProps.get('firstName')} ${ownerProps.get('lastName')}", readonly: 'true')
         }
         div(class: 'field') {
           label(for: 'name', 'Name:')
@@ -54,12 +54,12 @@ builder.html {
           label(for: 'birthDate', 'Birth Date:')
           input(id: 'birthDate', name: 'birthDate', type: 'text', placeholder: 'dd/MM/yy')
         }
-        div(class:'grouped inline fields ui segment') {
+        div(class: 'grouped inline fields ui segment') {
           petTypesResource.listChildren().each { petTypeResource ->
             def petTypeProperties = petTypeResource.adaptTo(ValueMap.class)
-            div(class:'field') {
-              div (class:'ui radio checkbox') {
-                input(type:'radio', name:'typeId', value:"${petTypeResource.getPath()}")
+            div(class: 'field') {
+              div(class: 'ui radio checkbox') {
+                input(type: 'radio', name: 'typeId', value: "${petTypeResource.getPath()}")
                 label("${petTypeProperties.get('name')}")
               }
             }
