@@ -5,6 +5,7 @@
 .idea/
 *.iml
 *.iws
+lib/
 out/
 
 # Apache Maven
