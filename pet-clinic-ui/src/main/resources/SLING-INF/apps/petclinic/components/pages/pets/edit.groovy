@@ -1,43 +1,18 @@
-import groovy.xml.MarkupBuilder
 import org.apache.sling.api.resource.ValueMap
 
-// the suffix pointing to an pet resource
 def suffix = request.getRequestPathInfo().getSuffix()
-// the user session based resource resolver
 def resourceResolver = resource.getResourceResolver()
-// the pet resource
 def petResource = resourceResolver.getResource(suffix);
-// the pet resource
 def petProps = petResource.adaptTo(ValueMap.class);
-// the pet's owner resource (pet.pets.owner)
 def ownerResource = petResource.getParent().getParent()
-// accessing the owner's properties by adapting the resource to a ValueMap.
 def ownerProps = ownerResource.adaptTo(ValueMap.class)
-
 def petTypesResource = resourceResolver.getResource('/sling/content/petTypes')
 
-def builder = new MarkupBuilder(out)
-builder.html {
-  head {
-    meta(charset: 'UTF-8')
-    meta(content: 'IE=edge,chrome=1', 'http-equiv': 'X-UA-Compatible');
-    meta(name: 'viewport', content: 'width=device-width, initial-scale=1.0')
-    link(href: '/etc/clientlibs/petclinic/css/default.css', rel: 'stylesheet')
-    link(href: '/etc/clientlibs/petclinic/css/semantic.min.css', rel: 'stylesheet')
-    script('', type: 'text/javascript', src: '/etc/clientlibs/petclinic/js/jquery-1.11.0.min.js')
-    script('', type: 'text/javascript', src: '/etc/clientlibs/petclinic/js/semantic.min.js')
-    script('', type: 'text/javascript', src: '/etc/clientlibs/petclinic/js/form.js')
-  }
+sling.include(resource, 'petclinic/components/header')
+sling.include(resource, 'petclinic/components/navigation')
+
+markupBuilder.html {
   body {
-    div(class: 'ui menu teal inverted') {
-      a(class: 'title item', href: '/content/petclinic/en/owners.html') {
-        strong('Pet Clinic')
-      }
-      a(class: 'item', href: '/content/petclinic/en/owners.html', 'Find Owners')
-      a(class: 'item', href: '/content/petclinic/en/vets.html', 'Veterinarians')
-      a(class: 'item', href: '/content/petclinic/en/specialities.html', 'Specialities')
-      a(class: 'item', href: '/content/petclinic/en/petTypes.html', 'Pet Types')
-    }
     div(class: 'container') {
       div(class: 'ui grid') {
         div(class: 'seven wide column') {
@@ -94,3 +69,5 @@ builder.html {
     }
   }
 }
+
+sling.include(resource, 'petclinic/components/footer')
