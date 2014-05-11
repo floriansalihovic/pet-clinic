@@ -127,6 +127,40 @@ running Sling instance. When calling ```http://localhost:8080/my-first-node.html
 ```my-first-node.xml``` is displayed. Similar to my-first-node.xml the application's initial content is set up. By
 providing content under ```SLING-INF/sling/content/owners``` like
 
+    {
+      "jcr:primaryType": "nt:unstructured",
+      "firstName": "George",
+      "lastName": "Franklin",
+      "address": "110 W. Liberty St.",
+      "city": "Madison",
+      "telephone": "6085551023",
+      "pets": {
+        "jcr:primaryType": "nt:unstructured",
+        "jenny": {
+          "jcr:primaryType": "nt:unstructured",
+          "sling:resourceType": "petclinic/components/pages/owners/pets",
+          "name": "Jenny",
+          "typeId": "/sling/content/petTypes/hamster",
+          "birthDate": "08/02/2014"
+        },
+        "leo": {
+          "jcr:primaryType": "nt:unstructured",
+          "sling:resourceType": "petclinic/components/pages/owners/pets",
+          "name": "Leo",
+          "typeId": "/sling/content/petTypes/cat",
+          "birthDate": "07/09/2000"
+        },
+        "shaka": {
+          "jcr:primaryType": "nt:unstructured",
+          "sling:resourceType": "petclinic/components/pages/owners/pets",
+          "name": "Shaka",
+          "typeId": "/sling/content/petTypes/dog",
+          "birthDate": "10/03/2000"
+        }
+      }
+    }
+
+test data is added. The data could also be expressed in XML having such a structure:
 
     <node>
       <primaryNodeType>nt:unstructured</primaryNodeType>
@@ -161,11 +195,11 @@ providing content under ```SLING-INF/sling/content/owners``` like
         <value>6085551023</value>
       </property>
 
+      <!-- child nodes -->
+
     </node>
 
-test data is added. The archetype's initial content and script are kept in order to have reference data throughout the tutorial -
-until dedicated render components are provided. To deploy the data properly, the ```SLING-INF/sling/content/owners```
-directory has to be added to the plugins ```Sling-Initial-Content`` configuration.
+Please refer to [Content Loading and Nodetype Support](http://sling.apache.org/site/content-loading-jcrcontentloader.html) of the Sling documentation for more information. JSON is chosen in some cases over XML because the language is more expressive. The archetype's initial content and script are kept in order to have reference data throughout the tutorial - until dedicated render components are provided. To deploy the data properly, the ```SLING-INF/sling/content/owners``` directory has to be added to the plugins ```Sling-Initial-Content`` configuration.
 
 
     <plugin>
@@ -671,8 +705,46 @@ The loop not only creates the radio buttons, but also pre-selects the radio butt
       }
     }
 
-
+Adding the script for the specialities page and its demo content is basically a copy/paste/edit operation of the pet types page, therefore documenting this part will be skipped.
  
+## Veterinarians
+
+    <form method="post" action="edit" role="form" class="ui form">
+      <input name="id" type="hidden" value="536e867be4b0ddd3a1ba9374">
+  
+      <div class="field">
+        <label for="firstName">First Name</label>
+        <input type="text" id="firstName" name="firstName" placeholder="First Name" value="James">
+      </div>
+      <div class="field">
+        <label for="lastName">Last Name</label>
+        <input type="text" id="lastName" name="lastName" placeholder="Last Name" value="Carter">
+      </div>
+      <div class="field">
+        <label>Specialities</label>
+      </div>
+      <div class="ui segment">
+        <div class="field">
+          <div class="ui checkbox">
+            <input type="checkbox" name="Radiology">
+            <label>Radiology</label>
+          </div>
+        </div>
+        <div class="field">
+          <div class="ui checkbox">
+            <input type="checkbox" name="Surgery" checked="checked">
+            <label>Surgery</label>
+          </div>
+        </div>
+        <div class="field">
+          <div class="ui checkbox">
+            <input type="checkbox" name="Dentistry" checked="checked">
+            <label>Dentistry</label>
+          </div>
+        </div>
+      </div>
+      <button type="submit" class="ui green submit button">Save</button>
+    </form>
 
 
 
