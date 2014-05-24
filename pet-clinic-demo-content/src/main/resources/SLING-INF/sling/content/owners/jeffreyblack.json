@@ -1,5 +1,6 @@
 {
   "jcr:primaryType": "nt:unstructured",
+  "sling:resourceType": "petclinic/owner",
   "firstName": "Jeffrey",
   "lastName": "Black",
   "address": "1450 Oak Blvd.",
@@ -9,14 +10,14 @@
     "jcr:primaryType": "nt:unstructured",
     "jeff": {
       "jcr:primaryType": "nt:unstructured",
-      "sling:resourceType": "petclinic/components/pages/owners/pets",
+      "sling:resourceType": "petclinic/pet",
       "name": "Jeff",
       "typeId": "/sling/content/petTypes/dog",
       "birthDate": "21/01/2014"
     },
     "lucky": {
       "jcr:primaryType": "nt:unstructured",
-      "sling:resourceType": "petclinic/components/pages/owners/pets",
+      "sling:resourceType": "petclinic/pet",
       "name": "Lucky",
       "typeId": "/sling/content/petTypes/bird",
       "birthDate": "06/08/1999"

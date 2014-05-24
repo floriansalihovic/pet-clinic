@@ -38,7 +38,7 @@ markupBuilder.form(class: 'ui form', role: 'form', action: "${petResource.getPat
       }
     }
   }
-  input(type: 'hidden', name: 'sling:resourceType', value: 'petclinic/components/pages/owners/pets')
+  input(type: 'hidden', name: 'sling:resourceType', value: 'petclinic/pet')
   input(type: 'hidden', name: ':redirect',
       value: "/content/petclinic/en/owners.detail.html${ownerResource.getPath()}")
   input(type: 'hidden', name: '_charset_', value: 'UTF-8')

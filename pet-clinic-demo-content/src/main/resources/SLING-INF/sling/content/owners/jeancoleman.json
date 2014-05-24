@@ -1,5 +1,6 @@
 {
   "jcr:primaryType": "nt:unstructured",
+  "sling:resourceType": "petclinic/owner",
   "firstName": "Jean",
   "lastName": "Coleman",
   "address": "105 N. Lake St.",
@@ -9,14 +10,14 @@
     "jcr:primaryType": "nt:unstructured",
     "max": {
       "jcr:primaryType": "nt:unstructured",
-      "sling:resourceType": "petclinic/components/pages/owners/pets",
+      "sling:resourceType": "petclinic/pet",
       "name": "Max",
       "typeId": "/sling/content/petTypes/cat",
       "birthDate": "04/09/1995"
     },
     "samntha": {
       "jcr:primaryType": "nt:unstructured",
-      "sling:resourceType": "petclinic/components/pages/owners/pets",
+      "sling:resourceType": "petclinic/pet",
       "name": "Samntha",
       "typeId": "/sling/content/petTypes/cat",
       "birthDate": "04/09/1995"
