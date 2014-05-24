@@ -23,4 +23,10 @@
     <value>Cat</value>
   </property>
 
+  <property>
+    <name>sling:resourceType</name>
+    <type>String</type>
+    <value>petclinic/pet</value>
+  </property>
+
 </node>

@@ -34,7 +34,7 @@ markupBuilder.form(class: 'ui form', role: 'form', action: "${veterinarianResour
   }
   input(type: 'hidden', name: 'specialities@TypeHint', value: 'String[]')
   input(type: 'hidden', name: "specialities@Delete", value: 'delete specialities')
-  input(type: 'hidden', name: 'sling:resourceType', value: 'petclinic/components/pages/veterinarians/veterinarian')
+  input(type: 'hidden', name: 'sling:resourceType', value: 'petclinic/veterinarian')
   input(type: 'hidden', name: ':redirect', value: "${resource.getPath()}.html")
   input(type: 'hidden', name: '_charset_', value: 'UTF-8')
   button(type: 'submit', class: 'ui blue submit button', 'Save')
