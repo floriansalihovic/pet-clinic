@@ -59,6 +59,7 @@ whereas the JSON equivalent looks a bit more expressive
 
     {
       "jcr:primaryType": "nt:unstructured",
+      "sling:resourceType": "petclinic/owner",
       "firstName": "George",
       "lastName": "Franklin",
       "address": "110 W. Liberty St.",
@@ -68,21 +69,21 @@ whereas the JSON equivalent looks a bit more expressive
         "jcr:primaryType": "nt:unstructured",
         "jenny": {
           "jcr:primaryType": "nt:unstructured",
-          "sling:resourceType": "petclinic/components/pages/owners/pets",
+          "sling:resourceType": "petclinic/pet",
           "name": "Jenny",
           "typeId": "/sling/content/petTypes/hamster",
           "birthDate": "08/02/2014"
         },
         "leo": {
           "jcr:primaryType": "nt:unstructured",
-          "sling:resourceType": "petclinic/components/pages/owners/pets",
+          "sling:resourceType": "petclinic/pet",
           "name": "Leo",
           "typeId": "/sling/content/petTypes/cat",
           "birthDate": "07/09/2000"
         },
         "shaka": {
           "jcr:primaryType": "nt:unstructured",
-          "sling:resourceType": "petclinic/components/pages/owners/pets",
+          "sling:resourceType": "petclinic/pet",
           "name": "Shaka",
           "typeId": "/sling/content/petTypes/dog",
           "birthDate": "10/03/2000"

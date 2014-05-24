@@ -159,7 +159,7 @@ A more complex example would be the adding and modifification of pets. Pets are 
           }
         }
       }
-      input(type: 'hidden', name: 'sling:resourceType', value: 'petclinic/components/pages/owners/pets')
+      input(type: 'hidden', name: 'sling:resourceType', value: 'petclinic/pet')
       input(type: 'hidden', name: ':redirect',
       value: "/content/petclinic/en/owners.detail.html${ownerResource.getPath()}")
       input(type: 'hidden', name: '_charset_', value: 'UTF-8')
@@ -208,7 +208,7 @@ Here, even the add form requires some dynamically generated form elements. The e
           }
         }
       }
-      input(type: 'hidden', name: 'sling:resourceType', value: 'petclinic/components/pages/owners/pets')
+      input(type: 'hidden', name: 'sling:resourceType', value: 'petclinic/pet')
       input(type: 'hidden', name: ':redirect', value: "/content/petclinic/en/owners.detail.html${ownerResource.getPath()}")
       input(type: 'hidden', name: '_charset_', value: 'UTF-8')
       button(type: 'submit', class: 'ui blue submit button', 'Save')

@@ -23,7 +23,7 @@ The previous chapter was introductionary and provides some important basics towa
         <label for="telephone">Telephone:</label>
         <input id="telephone" name="telephone" type="text" placeholder="Telephone">
       </div>
-      <input type="hidden" name="sling:resourceType" value="petclinic/components/pages/owners">
+      <input type="hidden" name="sling:resourceType" value="petclinic/owner">
       <input type="hidden" name=":redirect" value="/content/petclinic/en/owners.html">
       <input type="hidden" name="_charset_" value="UTF-8">
       <button type="submit" class="ui blue submit button">Save</button>
@@ -52,7 +52,7 @@ This for example is the form for adding an owner similar to the demo content own
         <label for="telephone">Telephone:</label>
         <input id="telephone" name="telephone" type="text" placeholder="Telephone" value="6085551023">
       </div>
-      <input type="hidden" name="sling:resourceType" value="petclinic/components/pages/owners">
+      <input type="hidden" name="sling:resourceType" value="petclinic/owner">
       <input type="hidden" name=":redirect" value="/content/petclinic/en/owners.html">
       <input type="hidden" name="_charset_" value="UTF-8">
       <button type="submit" class="ui blue submit button">Save</button>
