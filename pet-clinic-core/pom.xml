@@ -27,6 +27,7 @@
 
   <artifactId>pet-clinic-core</artifactId>
   <packaging>bundle</packaging>
+
   <name>pet-clinic-core</name>
 
   <build>
@@ -92,6 +93,7 @@
     <dependency>
       <groupId>org.codehaus.groovy</groupId>
       <artifactId>groovy-all</artifactId>
+      <scope>provided</scope>
     </dependency>
   </dependencies>
 

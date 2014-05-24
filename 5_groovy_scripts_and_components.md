@@ -135,9 +135,6 @@ Similar to the ```nav``` element used to wrap the navigation, the ```footer``` e
 
 Using the ```sling.include``` to include the components in the page(s), the code will be reduced to a minimum.
 
-    def resourceResolver = resource.getResourceResolver()
-    def ownersResource = resourceResolver.getResource('/sling/content/owners')
-    
     sling.include(resource, 'petclinic/components/header')
     sling.include(resource, 'petclinic/components/navigation')
     
@@ -155,7 +152,10 @@ Using the ```sling.include``` to include the components in the page(s), the code
     
     sling.include(resource, 'petclinic/components/footer')
 
-Now, the basic template for a page is reduced to a minimum.
+The basic template for a page is reduced to a minimum. The delta between the various files is the content.
+
+When pushing the content into components as well, one can use Sling internal inner workings to include
+components based on selectors as well, because the slingRequest is passed to every script being invoked. 
 
 
 
