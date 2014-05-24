@@ -1,7 +1,7 @@
+import io.github.floriansalihovic.petclinic.search.OwnerSearchService
 import org.apache.sling.api.resource.ValueMap
 
-def resourceResolver = resource.getResourceResolver()
-def ownersResource = resourceResolver.getResource('/sling/content/owners')
+def ownerResources = request.adaptTo(OwnerSearchService.class).findOwnerResources()
 
 sling.include(resource, 'petclinic/components/header')
 sling.include(resource, 'petclinic/components/navigation')
@@ -15,7 +15,7 @@ markupBuilder.html {
         }
         div(class: 'nine wide column') {
           div(class: 'ui icon input', style: 'float: right; margin-left: 1em;') {
-            form(method: 'GET') {
+            form(method: 'GET', action:"${resource.getPath()}.html") {
               input(name: 'q', type: 'text', placeholder: 'Find owners...')
             }
             i(class: 'circular search icon', '')
@@ -31,7 +31,7 @@ markupBuilder.html {
           }
         }
         tbody {
-          ownersResource.listChildren().each { ownerResource ->
+          ownerResources.each { ownerResource ->
             def ownerProps = ownerResource.adaptTo(ValueMap.class)
             tr {
               td {
