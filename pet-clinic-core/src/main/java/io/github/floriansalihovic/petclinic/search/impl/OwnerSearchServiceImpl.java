@@ -1,7 +1,6 @@
 package io.github.floriansalihovic.petclinic.search.impl;
 
 import io.github.floriansalihovic.petclinic.search.*;
-import org.apache.felix.scr.annotations.*;
 import org.apache.sling.api.resource.*;
 import org.slf4j.*;
 
