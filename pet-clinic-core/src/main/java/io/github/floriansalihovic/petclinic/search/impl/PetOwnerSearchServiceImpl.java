@@ -1,5 +1,6 @@
 package io.github.floriansalihovic.petclinic.search.impl;
 
+import io.github.floriansalihovic.petclinic.owners.*;
 import io.github.floriansalihovic.petclinic.search.*;
 import org.apache.sling.api.resource.*;
 import org.slf4j.*;
@@ -7,13 +8,14 @@ import org.slf4j.*;
 import javax.jcr.query.*;
 import java.util.*;
 
-public class OwnerSearchServiceImpl implements OwnerSearchService {
+public class PetOwnerSearchServiceImpl implements PetOwnerSearchService {
 
     /**
      * The default logger.
      */
-    private static final Logger LOGGER = LoggerFactory.getLogger(OwnerSearchServiceImpl.class);
+    private static final Logger LOGGER = LoggerFactory.getLogger(PetOwnerSearchServiceImpl.class);
 
+    // Storage variable for the query property.
     private String query;
 
     /**
@@ -38,7 +40,11 @@ public class OwnerSearchServiceImpl implements OwnerSearchService {
      * {@inheritDoc}
      */
     @Override
-    public Iterator<Resource> findPetOwnerResources() {
+    public Iterator<PetOwner> findPetOwners() {
+        return ResourceUtil.adaptTo(this.findPetOwnerResources(), PetOwner.class);
+    }
+
+    private Iterator<Resource> findPetOwnerResources() {
         final StringBuffer buffer = new StringBuffer();
         buffer.append("select * from [nt:unstructured] as owner ")
                 .append("where (owner.[sling:resourceType] = \"petclinic/owner\"");

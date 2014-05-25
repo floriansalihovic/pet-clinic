@@ -1,58 +1,50 @@
-    import io.github.floriansalihovic.petclinic.search.OwnerSearchService
-    import org.apache.sling.api.resource.ValueMap
+import io.github.floriansalihovic.petclinic.search.PetOwnerSearchService
 
-    def searchService = request.adaptTo(OwnerSearchService.class)
-    def ownerResources = searchService ? searchService.findOwnerResources() : null
+def searchService = request.adaptTo(PetOwnerSearchService.class)
+def petOwnersIterator = searchService ? searchService.findPetOwners() : null
 
-    sling.include(resource, 'petclinic/components/header')
-    sling.include(resource, 'petclinic/components/navigation')
+sling.include(resource, 'petclinic/components/header')
+sling.include(resource, 'petclinic/components/navigation')
 
-    markupBuilder.html {
-      body {
-        div(class: 'container') {
-          div(class: 'ui grid') {
-            div(class: 'seven wide column') {
-              h1(class: 'ui header', 'Owners')
+markupBuilder.html {
+  body {
+    div(class: 'container') {
+      div(class: 'ui grid') {
+        div(class: 'seven wide column') {
+          h1(class: 'ui header', 'Owners')
+        }
+        div(class: 'nine wide column') {
+          div(class: 'ui icon input', style: 'float: right; margin-left: 1em;') {
+            form(method: 'GET', action: "${resource.getPath()}.html") {
+              input(name: 'q', type: 'text', placeholder: 'Find owners...')
             }
-            div(class: 'nine wide column') {
-              div(class: 'ui icon input', style: 'float: right; margin-left: 1em;') {
-                form(method: 'GET', action:"${resource.getPath()}.html") {
-                  input(name: 'q', type: 'text', placeholder: 'Find owners...')
-                }
-                i(class: 'circular search icon', '')
-              }
-              a(href: "${resource.getPath()}.add.html", class: 'ui button green',
-                  style: 'float: right; margin-left: 1em;', 'Add Owner')
-            }
+            i(class: 'circular search icon', '')
           }
-          table(class: 'ui table segment') {
-            thead {
+          a(href: "${resource.getPath()}.add.html", class: 'ui button green',
+              style: 'float: right; margin-left: 1em;', 'Add Owner')
+        }
+      }
+      table(class: 'ui table segment') {
+        thead {
+          tr {
+            th('Name'); th('City'); th('Address'); th('Telephone'); th('Pets')
+          }
+        }
+        tbody {
+          if (petOwnersIterator) {
+            petOwnersIterator.each() { petOwner ->
               tr {
-                th('Name'); th('City'); th('Address'); th('Telephone'); th('Pets')
-              }
-            }
-            tbody {
-              if (ownerResources) {
-                ownerResources.each { ownerResource ->
-                  def ownerProps = ownerResource.adaptTo(ValueMap.class)
-                  tr {
-                    td {
-                      a(href: "${resource.getPath()}.detail.html${ownerResource.getPath()}",
-                          "${ownerProps.get('firstName')} ${ownerProps.get('lastName')}")
-                    }
-                    td(ownerProps.get('city'))
-                    td(ownerProps.get('address'))
-                    td(ownerProps.get('telephone'))
-                    td {
-                      def petsResource = ownerResource.getChild('pets')
-                      if (petsResource) {
-                        div {
-                          petsResource.listChildren().each { petResource ->
-                            def petProps = petResource.adaptTo(ValueMap.class)
-                            span(class: 'ui small label teal', "${petProps.get('name')}")
-                          }
-                        }
-                      }
+                td {
+                  a(href: "${resource.getPath()}.detail.html${petOwner.getPath()}",
+                      "${petOwner.getFirstName()} ${petOwner.getLastName()}")
+                }
+                td(petOwner.getCity())
+                td(petOwner.getAddress())
+                td(petOwner.getTelephone())
+                td {
+                  div {
+                    petOwner.getPetNames().each() { name ->
+                      span(class: 'ui small label teal', "${name}")
                     }
                   }
                 }
@@ -62,5 +54,7 @@
         }
       }
     }
+  }
+}
 
-    sling.include(resource, 'petclinic/components/footer')
+sling.include(resource, 'petclinic/components/footer')

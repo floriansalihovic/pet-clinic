@@ -1,5 +1,6 @@
 package io.github.floriansalihovic.petclinic.search;
 
+import io.github.floriansalihovic.petclinic.owners.*;
 import org.apache.sling.api.resource.*;
 
 import java.util.*;
@@ -8,7 +9,7 @@ import java.util.*;
  * Service defining the interface to query for owner resources. Owner resources are identified by resource type
  * "petclinic/owner".
  */
-public interface OwnerSearchService {
+public interface PetOwnerSearchService {
 
     /**
      * The query to be evaluated. If the query is empty, all owner resources will return.
@@ -26,10 +27,10 @@ public interface OwnerSearchService {
     void setResourceResolver(ResourceResolver resourceResolver);
 
     /**
-     * Finds all owner resources. An owner is identified bu the resource type petclinic/owner. The method will return
-     * all resources, if no query was provided.
+     * Finds all owners. An owner is identified bu the resource type petclinic/owner. The method will return all owners,
+     * if no query was provided. If a query is set, it will be return only the pet owners matching the given criteria.
      *
-     * @return All resource matching the given query or all resources of resource type petclinic/owner.
+     * @return All pet owners found.
      */
-    Iterator<Resource> findPetOwnerResources();
+    Iterator<PetOwner> findPetOwners();
 }

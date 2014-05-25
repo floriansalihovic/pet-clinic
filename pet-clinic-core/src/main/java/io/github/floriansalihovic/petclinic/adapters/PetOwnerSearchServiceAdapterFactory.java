@@ -15,22 +15,22 @@ import org.slf4j.*;
 @Service
 @Properties({
         @Property(name = AdapterFactory.ADAPTER_CLASSES,
-                value = {"io.github.floriansalihovic.petclinic.search.OwnerSearchService"}),
+                value = {"io.github.floriansalihovic.petclinic.search.PetOwnerSearchService"}),
         @Property(name = AdapterFactory.ADAPTABLE_CLASSES,
                 value = {"org.apache.sling.api.SlingHttpServletRequest"})})
-public class OwnerSearchServiceAdapterFactory implements AdapterFactory {
+public class PetOwnerSearchServiceAdapterFactory implements AdapterFactory {
 
     /**
      * The default logger.
      */
-    private static final Logger LOGGER = LoggerFactory.getLogger(OwnerSearchServiceAdapterFactory.class);
+    private static final Logger LOGGER = LoggerFactory.getLogger(PetOwnerSearchServiceAdapterFactory.class);
 
     @SuppressWarnings("unchecked")
     @Override
     public <AdapterType> AdapterType getAdapter(Object adaptable,
                                                 Class<AdapterType> type) {
         LOGGER.info("getAdapter {} for {}", adaptable, type);
-        if (type != OwnerSearchService.class) {
+        if (type != PetOwnerSearchService.class) {
             return null;
         } else if (adaptable instanceof SlingHttpServletRequest) {
             return (AdapterType) this.adaptTo((SlingHttpServletRequest) adaptable);
@@ -49,9 +49,9 @@ public class OwnerSearchServiceAdapterFactory implements AdapterFactory {
      *
      * @return The OwnerSearchService instance created.
      */
-    private OwnerSearchService adaptTo(SlingHttpServletRequest request) {
+    private PetOwnerSearchService adaptTo(SlingHttpServletRequest request) {
         final RequestParameter p = request.getRequestParameter("q");
-        final OwnerSearchService service = new OwnerSearchServiceImpl();
+        final PetOwnerSearchService service = new PetOwnerSearchServiceImpl();
 
         if (null != p) {
             service.setQuery(p.getString());
