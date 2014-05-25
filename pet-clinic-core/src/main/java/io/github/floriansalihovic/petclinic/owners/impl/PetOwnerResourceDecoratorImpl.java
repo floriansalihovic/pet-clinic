@@ -95,10 +95,11 @@ public class PetOwnerResourceDecoratorImpl implements PetOwner {
 
         final ValueMap petOwnerProps = this.petOwnerResource.adaptTo(ValueMap.class);
 
+        this.address = petOwnerProps.get("address", String.class);
+        this.city = petOwnerProps.get("city", String.class);
         this.firstName = petOwnerProps.get("firstName", String.class);
         this.lastName = petOwnerProps.get("lastName", String.class);
-        this.city = petOwnerProps.get("city", String.class);
-        this.address = petOwnerProps.get("address", String.class);
+        this.telephone = petOwnerProps.get("telephone", String.class);
         this.petNames = new ArrayList<String>();
 
         final Resource petsResource = this.petOwnerResource.getChild("pets");
