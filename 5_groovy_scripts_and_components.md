@@ -85,7 +85,7 @@ This service will provide a binding in all scripts invoked injecting ```markupBu
 Slicing this page into several components would reduce the amount of code to be written on the pages and provide a nice modular view on things. In the ```pet-clinic-ui``` bundle, new components are added by adding scripts just like the pages to the ```/apps/petclinic/components``` folder. The component's being added are
 
 - ```/apps/petclinic/components/head``` for the page's head element
-- ```/apps/petclinic/components/navigation``` for the naviagtion in the page
+- ```/apps/petclinic/components/navigation``` for the navigation in the page
 - ```/apps/petclinic/components/footer``` for the footer part of the page
 
 For ```/apps/petclinic/components/head```, ```head.groovy``` is added in the new folder. 

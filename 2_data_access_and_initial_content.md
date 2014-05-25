@@ -22,6 +22,12 @@ Sling provides the way to load content from JSON or XML. The an example for the 
       <primaryNodeType>nt:unstructured</primaryNodeType>
 
       <property>
+        <name>sling:resourceType</name>
+        <type>String</type>
+        <value>petclinic/owner</value>
+      </property>
+
+      <property>
         <name>firstName</name>
         <type>String</type>
         <value>George</value>
@@ -113,7 +119,7 @@ The structure of the initial and demo content provided looks like
                     |           |-- petTypes.xml
                     |           |-- specialities.xml
                     |           |-- vets.xml
-                    |           `-- vets.xml
+                    |           `-- visits.xml
                     `-- sling
                         `-- content
                             |-- owners
@@ -142,11 +148,11 @@ The structure of the initial and demo content provided looks like
                                 |-- rafaelortega.json
                                 `-- sharonjenkins.json
 
-There are already some design decision made. Every resource under ```/content/petclinic/en``` is a page with a destinct resource type. The directory structure itself is following some Sling confentions like starting with ```/content``` and ending with the language ```/en```. Information about localization can be found [here](http://sling.apache.org/site/internationalization-support.html). Everything under ```/sling/content``` is content in the terms of data.
+There are already some design decision made. Every resource under ```/content/petclinic/en``` is a page with a distinct resource type. The directory structure itself is following some Sling conventions like starting with ```/content``` folder and ending with the language folder ```/en```. Information about localization can be found [here](http://sling.apache.org/site/internationalization-support.html). Everything under ```/sling/content``` is content in the terms of data.
 
 ### Owners, pets and types
 
-Looking into one of the JSON files, not only data about an owner can be found, but about their pets as well. There can't be a pet without an owner. Thats why a pet resource in a child of the owner resource and visits are children of the pet. The type is a different kind of resource though. That's why the pet types hava destinct location in the repository. Similar relationships can be seen between veterinarians and specialities. The consistent referencing of non-child resource is done via paths. A path is the path to the resource so it be easily resolved. The design might be very pragmatic, but serves pretty well for the scope of the guide.
+Looking into one of the JSON files, not only data about an owner can be found, but about their pets as well. There can't be a pet without an owner. That's why a pet resource in a child of the owner resource and visits are children of the pet. The type is a different kind of resource though. That's why the pet types have a distinct location in the repository. Similar relationships can be found between veterinarians and specialities. The consistent referencing of non-child resource is done via paths. A path is the path to the resource so it be easily resolved. The design might be very pragmatic, but serves pretty well for the scope of the guide.
 
 
 http://sling.apache.org/site/internationalization-support.html 

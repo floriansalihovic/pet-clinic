@@ -1,6 +1,6 @@
 ## Groovy scripts
 
-Groovy is a dynamic language running on the JVM. It provides a lot of nice features and syntactic sugar to make it a perfect match for a counterpart of Java, eleminating the need for JSPs. In this guide the ```groovy.xml.MarkupBuilder``` is essential and its api is almost a small DSL for creating markup. The big advantage is that the programmer operates from within the language. Whereas in JSPs marukup, scriptlets and the JSTL are a minimum set of technologies involved, in Groovy its just groovy integrating seamlessly with the Java API. The following code illustrates the implementation of a basic page, being also the main template used for the pages.
+Groovy is a dynamic language running on the JVM. It provides a lot of nice features and syntactic sugar to make it a perfect match for a counterpart of Java, eliminating the need for JSPs. In this guide the ```groovy.xml.MarkupBuilder``` is essential and its api is almost a small DSL for creating markup. The big advantage is that the programmer operates from within the language. Whereas in JSPs markup, scriptlets and the JSTL are a minimum set of technologies involved, in Groovy its just groovy integrating seamlessly with the Java API. The following code illustrates the implementation of a basic page, being also the main template used for the pages.
 
     import groovy.xml.MarkupBuilder;
     
@@ -123,7 +123,7 @@ Accessing the properties of a resource can be done by adapting it to a ValueMap 
       button(type: 'submit', class: 'ui blue submit button', 'Save')
     }
 
-A more complex example would be the adding and modifification of pets. Pets are bound to an owner and are always of a certain type.
+A more complex example would be the adding and modification of pets. Pets are bound to an owner and are always of a certain type.
 
     import org.apache.sling.api.resource.ValueMap
     

@@ -1,6 +1,6 @@
 ## Data access and content modification.
 
-The previous chapter was introductionary and provides some important basics towards content bundles. Actual content creation or modification in a Application is mostly done because of user interactions. Adding new owners, editing existing ones or providing new specialities for veterinarians is often done via forms. Which data the form holds is quite often done via forms, which are prefilled if data should be edited.
+The previous chapter was a small introduction and provides some important basics towards content bundles. Actual content creation or modification in a Application is mostly done because of user interactions. Adding new owners, editing existing ones or providing new specialities for veterinarians is often done via forms. Which data the form holds is quite often done via forms, which are prefilled if data should be edited.
 
     <form class="ui form" role="form" action="/sling/content/owners/*" method="POST">
       <div class="field">
@@ -58,14 +58,14 @@ This for example is the form for adding an owner similar to the demo content own
       <button type="submit" class="ui blue submit button">Save</button>
     </form>
 
-The differnces are easy to spot. The actions point to different paths and therefor resources and the values of the input elements are set as well. And that's basically all there is to know about creating content creation or modification.
+The differences are easy to spot. The actions point to different paths and therefor resources and the values of the input elements are set as well. And that's basically all there is to know about creating content creation or modification.
 
 1. Creating a form or AJAX request to send data via POST.
 2. Reference a resource via path.
 3. Set properties for the resource.
-4. Provide additional information needed (typehints, redirect information and so on).
+4. Provide additional information needed (type hints, redirect information and so on).
 
-That sound easy and it is. Of course there is always more to know and for a deep dive check out the part [Manipulating Content](http://sling.apache.org/documentation/bundles/manipulating-content-the-slingpostservlet-servlets-post.html) on the project's documentation. The key component is the SlingPostServlet. The servlet won't be dicussed in this guide. It is simply too powerful and would break the guide's scope.
+That sound easy and it is. Of course there is always more to know and for a deep dive check out the part [Manipulating Content](http://sling.apache.org/documentation/bundles/manipulating-content-the-slingpostservlet-servlets-post.html) on the project's documentation. The key component is the SlingPostServlet. The servlet won't be discussed in this guide. It is simply too powerful and would break the guide's scope.
 
 Accessing the data is somewhat tricky though. This relies on the inner workings of Sling. Resolving resources in Sling is done with the ```org.apache.sling.api.resource.ResourceResolver```. Using ```ResourceResolver#getResource``` and passing a path will return the desired resource or ```null```, if the resource does not exist.
 
@@ -77,7 +77,7 @@ A basic groovy script for views will therefor look like
     der markupBuilder = new groovy.xml.MarkupBuilder(out)
     markupBuilder.html {
       head {
-        title('The srcipt')
+        title('The script')
       }
       body {
         h1('Hello world.')

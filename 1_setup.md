@@ -145,7 +145,6 @@ This makes the code more flexible and clean and open for changes. The next thing
           <groupId>org.apache.felix</groupId>
           <artifactId>org.apache.felix.scr.annotations</artifactId>
           <version>1.9.8</version>
-          <scope>provided</scope>
         </dependency>
         <dependency>
           <groupId>org.codehaus.groovy</groupId>
@@ -196,6 +195,7 @@ These are the dependencies used in the project. ```${project.basedir}/pet-clinic
       <dependency>
         <groupId>org.codehaus.groovy</groupId>
         <artifactId>groovy-all</artifactId>
+        <scope>provided</scope>
       </dependency>
     </dependencies>
 
@@ -244,5 +244,3 @@ The last piece to be added is the public Adobe Maven repository to the ```${proj
         </pluginRepositories>
       </profile>
     </profiles>
-
-That's it for part one.
