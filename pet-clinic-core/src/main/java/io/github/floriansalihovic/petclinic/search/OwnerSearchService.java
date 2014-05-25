@@ -31,5 +31,5 @@ public interface OwnerSearchService {
      *
      * @return All resource matching the given query or all resources of resource type petclinic/owner.
      */
-    Iterator<Resource> findOwnerResources();
+    Iterator<Resource> findPetOwnerResources();
 }

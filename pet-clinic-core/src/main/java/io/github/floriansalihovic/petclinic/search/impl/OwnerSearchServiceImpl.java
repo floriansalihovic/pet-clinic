@@ -38,7 +38,7 @@ public class OwnerSearchServiceImpl implements OwnerSearchService {
      * {@inheritDoc}
      */
     @Override
-    public Iterator<Resource> findOwnerResources() {
+    public Iterator<Resource> findPetOwnerResources() {
         final StringBuffer buffer = new StringBuffer();
         buffer.append("select * from [nt:unstructured] as owner ")
                 .append("where (owner.[sling:resourceType] = \"petclinic/owner\"");
